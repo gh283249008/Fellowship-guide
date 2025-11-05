@@ -1,0 +1,8 @@
+[
+    { "id": "ring_power", "name": "力量之戒", "icon": "DEFAULT", "attack": 30, "critRate": 5 },
+    { "id": "ring_defense", "name": "防御之戒", "icon": "DEFAULT", "defense": 25, "health": 50 },
+    { "id": "ring_magic", "name": "魔法之戒", "icon": "DEFAULT", "mana": 40, "cooldown": 10 },
+    { "id": "ring_crit", "name": "暴击之戒", "icon": "DEFAULT", "critRate": 10, "critDamage": 20 },
+    { "id": "ring_balanced", "name": "平衡之戒", "icon": "DEFAULT", "attack": 20, "defense": 20, "health": 40, "mana": 25 }
+]
+

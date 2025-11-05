@@ -1,0 +1,21 @@
+[
+    { "id": "legs_leather", "name": "皮甲护腿", "icon": "DEFAULT", "defense": 25, "health": 40 },
+    { "id": "legs_chain", "name": "锁子甲护腿", "icon": "DEFAULT", "defense": 40, "health": 60 },
+    { "id": "legs_plate", "name": "板甲护腿", "icon": "DEFAULT", "defense": 60, "health": 90, "moveSpeed": -2 },
+    { "id": "legs_magic", "name": "魔法护腿", "icon": "DEFAULT", "defense": 45, "health": 70, "mana": 30, "cooldown": 5 },
+    {
+        "id": "3491",
+        "name": "狱主护腿",
+        "icon": "assets/icons/legs/3491.png",
+        "itemLevel": 330,
+        "defense": 611,
+        "stamina": 445,
+        "intellect": 149,
+        "critRate": 315,
+        "haste": 56,
+        "setId": "dark_prophecy",
+        "heroes": ["silvia"],
+        "noSocket": true
+    }
+]
+

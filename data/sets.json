@@ -1,0 +1,45 @@
+[
+    {
+        "id": "example_set_1",
+        "name": "示例套装1",
+        "bonuses": [
+            {
+                "requiredPieces": 2,
+                "description": "2件套装效果：所有属性 +5%"
+            },
+            {
+                "requiredPieces": 4,
+                "description": "4件套装效果：暴击率 +10%"
+            },
+            {
+                "requiredPieces": 6,
+                "description": "6件套装效果：技能伤害 +15%"
+            }
+        ]
+    },
+    {
+        "id": "example_set_2",
+        "name": "示例套装2",
+        "bonuses": [
+            {
+                "requiredPieces": 2,
+                "description": "2件套装效果：生命值 +20%"
+            },
+            {
+                "requiredPieces": 4,
+                "description": "4件套装效果：伤害减免 +10%"
+            }
+        ]
+    },
+    {
+        "id": "dark_prophecy",
+        "name": "黑暗预言",
+        "bonuses": [
+            {
+                "requiredPieces": 2,
+                "description": "你的技能有几率(每分钟触发 0.8 次)使你的急速提高25%,持续20秒。"
+            }
+        ]
+    }
+]
+

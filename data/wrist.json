@@ -1,0 +1,7 @@
+[
+    { "id": "wrist_basic", "name": "基础护腕", "icon": "DEFAULT", "defense": 10, "health": 20 },
+    { "id": "wrist_iron", "name": "铁制护腕", "icon": "DEFAULT", "defense": 18, "health": 35 },
+    { "id": "wrist_magic", "name": "魔法护腕", "icon": "DEFAULT", "defense": 15, "mana": 30, "cooldown": 5 },
+    { "id": "wrist_combat", "name": "战斗护腕", "icon": "DEFAULT", "defense": 12, "attack": 20, "critRate": 5 }
+]
+

@@ -1,0 +1,87 @@
+[
+    {
+        "id": "sapphire_ancestral_surge",
+        "name": "先灵激涌",
+        "description": "英雄之灵生效期间,你的力量、敏捷与智力提高 8%。",
+        "energyRequirement": 120,
+        "icon": "assets/icons/gemsskill/sapphire/ancestral_surge.png",
+        "tier": 1
+    },
+    {
+        "id": "sapphire_ancestral_surge_ii",
+        "name": "先灵激涌 II",
+        "description": "英雄之灵生效期间,你的力量、敏捷与智力提高 24%。",
+        "energyRequirement": 1200,
+        "icon": "assets/icons/gemsskill/sapphire/ancestral_surge.png",
+        "tier": 2,
+        "replaces": "sapphire_ancestral_surge"
+    },
+    {
+        "id": "sapphire_mysterious_intuition",
+        "name": "神秘直觉",
+        "description": "+100 耐力\n+100 灵魂值",
+        "energyRequirement": 240,
+        "icon": "assets/icons/gemsskill/sapphire/mysterious_intuition.png",
+        "tier": 1
+    },
+    {
+        "id": "sapphire_mysterious_intuition_ii",
+        "name": "神秘直觉 II",
+        "description": "+300 耐力\n+300 灵魂",
+        "energyRequirement": 1560,
+        "icon": "assets/icons/gemsskill/sapphire/mysterious_intuition.png",
+        "tier": 2,
+        "replaces": "sapphire_mysterious_intuition"
+    },
+    {
+        "id": "sapphire_resonating_soul",
+        "name": "共鸣之魂",
+        "description": "生命值每降低10%,你受到的所有伤害降低 1%。",
+        "energyRequirement": 480,
+        "icon": "assets/icons/gemsskill/sapphire/resonating_soul.png",
+        "tier": 1
+    },
+    {
+        "id": "sapphire_resonating_soul_ii",
+        "name": "共鸣之魂 II",
+        "description": "生命值每降低 10%,你受到的所有伤害降低 3%。",
+        "energyRequirement": 1920,
+        "icon": "assets/icons/gemsskill/sapphire/resonating_soul.png",
+        "tier": 2,
+        "replaces": "sapphire_resonating_soul"
+    },
+    {
+        "id": "sapphire_oracle_prophet",
+        "name": "神谕先知",
+        "description": "+3% 灵魂值",
+        "energyRequirement": 720,
+        "icon": "assets/icons/gemsskill/sapphire/oracle_prophet.png",
+        "tier": 1
+    },
+    {
+        "id": "sapphire_oracle_prophet_ii",
+        "name": "神谕先知 II",
+        "description": "+9% 灵魂",
+        "energyRequirement": 2280,
+        "icon": "assets/icons/gemsskill/sapphire/oracle_prophet.png",
+        "tier": 2,
+        "replaces": "sapphire_oracle_prophet"
+    },
+    {
+        "id": "sapphire_prophet_blessing",
+        "name": "先知祝福",
+        "description": "英雄之灵的持续时间延长6秒。",
+        "energyRequirement": 960,
+        "icon": "assets/icons/gemsskill/sapphire/prophet_blessing.png",
+        "tier": 1
+    },
+    {
+        "id": "sapphire_prophet_blessing_ii",
+        "name": "先知祝福 II",
+        "description": "英雄之灵的持续时间延长 18 秒。",
+        "energyRequirement": 2640,
+        "icon": "assets/icons/gemsskill/sapphire/prophet_blessing.png",
+        "tier": 2,
+        "replaces": "sapphire_prophet_soul"
+    }
+]

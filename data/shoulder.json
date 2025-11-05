@@ -1,0 +1,21 @@
+[
+    { "id": "shoulder_basic", "name": "基础肩甲", "icon": "DEFAULT", "defense": 20, "health": 40 },
+    { "id": "shoulder_iron", "name": "铁制肩甲", "icon": "DEFAULT", "defense": 30, "health": 60 },
+    { "id": "shoulder_plate", "name": "板甲肩甲", "icon": "DEFAULT", "defense": 40, "health": 80 },
+    { "id": "shoulder_magic", "name": "魔法肩甲", "icon": "DEFAULT", "defense": 25, "mana": 40, "cooldown": 5 },
+    {
+        "id": "3494",
+        "name": "狱主披风",
+        "icon": "assets/icons/shoulder/3494.png",
+        "itemLevel": 330,
+        "defense": 537,
+        "stamina": 356,
+        "intellect": 119,
+        "haste": 208,
+        "mastery": 89,
+        "setId": "dark_prophecy",
+        "heroes": ["silvia"],
+        "noSocket": true
+    }
+]
+

@@ -1,0 +1,87 @@
+[
+    {
+        "id": "topaz_adrenaline_burst",
+        "name": "肾上腺素爆发",
+        "description": "每次对生命值不高于 30% 的目标造成伤害或进行治疗时,获得 3% 的急速,持续 10 秒。",
+        "energyRequirement": 120,
+        "icon": "assets/icons/gemsskill/topaz/adrenaline_burst.png",
+        "tier": 1
+    },
+    {
+        "id": "topaz_adrenaline_burst_ii",
+        "name": "肾上腺素爆发 II",
+        "description": "每次对生命值不高于 30% 的目标造成伤害或进行治疗时,获得 9% 的急速,持续 10 秒。",
+        "energyRequirement": 1200,
+        "icon": "assets/icons/gemsskill/topaz/adrenaline_burst.png",
+        "tier": 2,
+        "replaces": "topaz_adrenaline_burst"
+    },
+    {
+        "id": "topaz_rogue_swiftness",
+        "name": "盗贼之迅捷",
+        "description": "+100 耐力\n+100 急速",
+        "energyRequirement": 240,
+        "icon": "assets/icons/gemsskill/topaz/rogue_swiftness.png",
+        "tier": 1
+    },
+    {
+        "id": "topaz_rogue_swiftness_ii",
+        "name": "盗贼之迅捷 II",
+        "description": "+300 耐力\n+300 急速",
+        "energyRequirement": 1560,
+        "icon": "assets/icons/gemsskill/topaz/rogue_swiftness.png",
+        "tier": 2,
+        "replaces": "topaz_rogue_swiftness"
+    },
+    {
+        "id": "topaz_stealthwalker_revival",
+        "name": "潜行者之复苏",
+        "description": "当你的生命值低于 50% 时,立即恢复 8% 的最大生命值。该效果每20 秒可触发一次。",
+        "energyRequirement": 480,
+        "icon": "assets/icons/gemsskill/topaz/stealthwalker_revival.png",
+        "tier": 1
+    },
+    {
+        "id": "topaz_stealthwalker_revival_ii",
+        "name": "潜行者之复苏 II",
+        "description": "当你的生命值低于 50% 时,立即恢复 24% 的最大生命值。该效果每 20 秒可触发一次。",
+        "energyRequirement": 1920,
+        "icon": "assets/icons/gemsskill/topaz/stealthwalker_revival.png",
+        "tier": 2,
+        "replaces": "topaz_stealthwalker_revival"
+    },
+    {
+        "id": "topaz_feline_agility",
+        "name": "灵猫之捷",
+        "description": "+3% 急速",
+        "energyRequirement": 720,
+        "icon": "assets/icons/gemsskill/topaz/feline_agility.png",
+        "tier": 1
+    },
+    {
+        "id": "topaz_feline_agility_ii",
+        "name": "灵猫之捷 II",
+        "description": "+9% 急速",
+        "energyRequirement": 2280,
+        "icon": "assets/icons/gemsskill/topaz/feline_agility.png",
+        "tier": 2,
+        "replaces": "topaz_feline_agility"
+    },
+    {
+        "id": "topaz_grandmaster_blessing",
+        "name": "宗师祝福",
+        "description": "在英雄之灵未激活期间,你仍然保留其提供的3%急速。",
+        "energyRequirement": 960,
+        "icon": "assets/icons/gemsskill/topaz/grandmaster_blessing.png",
+        "tier": 1
+    },
+    {
+        "id": "topaz_grandmaster_blessing_ii",
+        "name": "宗师祝福 II",
+        "description": "在英雄之灵未激活期间,你仍然保留其提供的9% 急速。",
+        "energyRequirement": 2640,
+        "icon": "assets/icons/gemsskill/topaz/grandmaster_blessing.png",
+        "tier": 2,
+        "replaces": "topaz_grandmaster_soul"
+    }
+]

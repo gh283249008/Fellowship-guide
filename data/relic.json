@@ -1,0 +1,111 @@
+[
+    {
+        "id": "1487",
+        "name": "缚罪石",
+        "icon": "assets/icons/relic/1487.png",
+        "itemLevel": 330,
+        "intellect": 178,
+        "haste": 120,
+        "mastery": 280,
+        "heroes": ["silvia", "vigour", "rime", "ardeos"],
+        "relicAbilityName": "庇护",
+        "relicAbilityDesc": "为自身和附近的盟友提供15% 伤害减免,持续 15 秒。\n\n可在全局冷却期间使用。"
+    },
+    {
+        "id": "177",
+        "name": "远古结界石",
+        "icon": "assets/icons/relic/177.png",
+        "itemLevel": 330,
+        "intellect": 178,
+        "haste": 280,
+        "mastery": 120,
+        "heroes": ["silvia", "vigour", "rime", "ardeos"],
+        "relicAbilityName": "强效驱散",
+        "relicAbilityDesc": "立即为自身和较大半径范围内的盟友驱散所有有害魔法效果。\n\n可在全局冷却期间使用。"
+    },
+    {
+        "id": "1495",
+        "name": "远古家禽图腾",
+        "icon": "assets/icons/relic/1495.png",
+        "itemLevel": 330,
+        "intellect": 178,
+        "critRate": 120,
+        "spirit": 280,
+        "heroes": ["silvia", "vigour", "rime", "ardeos"],
+        "relicAbilityName": "变鸡术!",
+        "relicAbilityDesc": "立即将你的目标变成一只鸡。\n\n每次地下城中仅能使用有限次数。使用次数由全队共享。\n\n被变鸡术影响的敌人不会提供杀敌分数。\n\n可在全局冷却期间使用。"
+    },
+    {
+        "id": "416",
+        "name": "血仪战鼓",
+        "icon": "assets/icons/relic/416.png",
+        "itemLevel": 330,
+        "intellect": 178,
+        "critRate": 280,
+        "mastery": 120,
+        "heroes": ["silvia", "vigour", "rime", "ardeos"],
+        "relicAbilityName": "血仪狂热",
+        "relicAbilityDesc": "你和附近的盟友获得50%移动速度提升,持续12秒。\n\n可在全局冷却期间使用。"
+    },
+    {
+        "id": "256",
+        "name": "海潮灵药",
+        "icon": "assets/icons/relic/256.png",
+        "itemLevel": 330,
+        "intellect": 178,
+        "critRate": 120,
+        "haste": 280,
+        "heroes": ["silvia", "vigour"],
+        "relicAbilityName": "回春",
+        "relicAbilityDesc": "立即恢复你最大生命值的40%。\n\n可在全局冷却期间使用。"
+    },
+    {
+        "id": "310",
+        "name": "艾萨莱克精魂圣杯",
+        "icon": "assets/icons/relic/310.png",
+        "itemLevel": 330,
+        "intellect": 178,
+        "haste": 120,
+        "mastery": 280,
+        "heroes": ["silvia", "vigour"],
+        "relicAbilityName": "回复魔力值",
+        "relicAbilityDesc": "立即恢复你30%的最大魔力值。\n\n可在全局冷却期间使用。"
+    },
+    {
+        "id": "1491",
+        "name": "暗影宝珠",
+        "icon": "assets/icons/relic/1491.png",
+        "itemLevel": 330,
+        "intellect": 178,
+        "mastery": 180,
+        "spirit": 220,
+        "heroes": ["silvia", "vigour", "rime", "ardeos"],
+        "relicAbilityName": "强效隐形",
+        "relicAbilityDesc": "立即为你和附近的所有盟友施加强效隐形效果,持续15秒。\n\n只能在战斗外使用。"
+    },
+    {
+        "id": "111",
+        "name": "复活魔典",
+        "icon": "assets/icons/relic/111.png",
+        "itemLevel": 330,
+        "intellect": 178,
+        "haste": 280,
+        "spirit": 120,
+        "heroes": ["silvia", "vigour", "rime", "ardeos"],
+        "relicAbilityName": "复活",
+        "relicAbilityDesc": "复活一名阵亡的盟友。\n\n可在战斗中使用。"
+    },
+    {
+        "id": "1498",
+        "name": "嗡鸣传送石",
+        "icon": "assets/icons/relic/1498.png",
+        "itemLevel": 330,
+        "intellect": 178,
+        "critRate": 60,
+        "mastery": 340,
+        "heroes": ["silvia", "vigour", "rime", "ardeos"],
+        "relicAbilityName": "召唤传送门",
+        "relicAbilityDesc": "召唤两道可交互的传送门，你和盟友可借此在两地之间安全穿行。\n\n同时只能存在 1 组传送门。"
+    }
+]
+

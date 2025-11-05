@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fellowship 配装模拟器</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>⚔️ Fellowship 配装模拟器 V0.2</h1>
+            <div class="header-actions">
+                <button id="saveBtn" class="btn btn-primary">保存Build</button>
+                <button id="loadBtn" class="btn btn-secondary">加载Build</button>
+                <button id="resetBtn" class="btn btn-danger">重置</button>
+            </div>
+        </header>
+
+        <div class="main-content">
+            <div class="equipment-panel">
+                <h2>英雄与装备</h2>
+                
+                <div class="hero-slot">
+                    <h3>英雄</h3>
+                    <select id="hero" class="equipment-select">
+                        <option value="">-- 选择英雄 --</option>
+                    </select>
+                    <div id="heroInfo" class="hero-info">
+                        <div id="heroAvatar" class="hero-avatar"></div>
+                    </div>
+                </div>
+                
+                <div class="equipment-columns">
+                    <div class="equipment-column">
+                        <div class="equipment-slot" data-slot="head">
+                            <button class="slot-icon" data-slot="head" data-label="头" title="头部"></button>
+                            <span class="slot-name" id="head-name"></span>
+                            <button class="gem-socket" data-slot="head" title="镶嵌宝石" style="display: none;"></button>
+                            <select id="head" class="equipment-select visually-hidden">
+                                <option value="">-- 选择头部 --</option>
+                            </select>
+                        </div>
+
+                        <div class="equipment-slot" data-slot="shoulder">
+                            <button class="slot-icon" data-slot="shoulder" data-label="肩" title="肩部"></button>
+                            <span class="slot-name" id="shoulder-name"></span>
+                            <button class="gem-socket" data-slot="shoulder" title="镶嵌宝石" style="display: none;"></button>
+                            <select id="shoulder" class="equipment-select visually-hidden">
+                                <option value="">-- 选择肩部 --</option>
+                            </select>
+                        </div>
+
+                        <div class="equipment-slot" data-slot="cloak">
+                            <button class="slot-icon" data-slot="cloak" data-label="披" title="披风"></button>
+                            <span class="slot-name" id="cloak-name"></span>
+                            <button class="gem-socket" data-slot="cloak" title="镶嵌宝石" style="display: none;"></button>
+                            <select id="cloak" class="equipment-select visually-hidden">
+                                <option value="">-- 选择披风 --</option>
+                            </select>
+                        </div>
+
+                        <div class="equipment-slot" data-slot="chest">
+                            <button class="slot-icon" data-slot="chest" data-label="胸" title="胸部"></button>
+                            <span class="slot-name" id="chest-name"></span>
+                            <button class="gem-socket" data-slot="chest" title="镶嵌宝石" style="display: none;"></button>
+                            <select id="chest" class="equipment-select visually-hidden">
+                                <option value="">-- 选择胸部 --</option>
+                            </select>
+                        </div>
+
+                        <div class="equipment-slot" data-slot="hands">
+                            <button class="slot-icon" data-slot="hands" data-label="手" title="手部"></button>
+                            <span class="slot-name" id="hands-name"></span>
+                            <button class="gem-socket" data-slot="hands" title="镶嵌宝石" style="display: none;"></button>
+                            <select id="hands" class="equipment-select visually-hidden">
+                                <option value="">-- 选择手部 --</option>
+                            </select>
+                        </div>
+
+                        <div class="equipment-slot" data-slot="legs">
+                            <button class="slot-icon" data-slot="legs" data-label="腿" title="腿部"></button>
+                            <span class="slot-name" id="legs-name"></span>
+                            <button class="gem-socket" data-slot="legs" title="镶嵌宝石" style="display: none;"></button>
+                            <select id="legs" class="equipment-select visually-hidden">
+                                <option value="">-- 选择腿部 --</option>
+                            </select>
+                        </div>
+
+                        <div class="equipment-slot" data-slot="feet">
+                            <button class="slot-icon" data-slot="feet" data-label="足" title="足部"></button>
+                            <span class="slot-name" id="feet-name"></span>
+                            <button class="gem-socket" data-slot="feet" title="镶嵌宝石" style="display: none;"></button>
+                            <select id="feet" class="equipment-select visually-hidden">
+                                <option value="">-- 选择足部 --</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="equipment-column">
+                        <div class="equipment-slot" data-slot="necklace">
+                            <button class="slot-icon" data-slot="necklace" data-label="项" title="项链"></button>
+                            <span class="slot-name" id="necklace-name"></span>
+                            <button class="gem-socket" data-slot="necklace" title="镶嵌宝石" style="display: none;"></button>
+                            <select id="necklace" class="equipment-select visually-hidden">
+                                <option value="">-- 选择项链 --</option>
+                            </select>
+                        </div>
+
+                        <div class="equipment-slot" data-slot="wrist">
+                            <button class="slot-icon" data-slot="wrist" data-label="腕" title="护腕"></button>
+                            <span class="slot-name" id="wrist-name"></span>
+                            <button class="gem-socket" data-slot="wrist" title="镶嵌宝石" style="display: none;"></button>
+                            <select id="wrist" class="equipment-select visually-hidden">
+                                <option value="">-- 选择护腕 --</option>
+                            </select>
+                        </div>
+
+                        <div class="equipment-slot" data-slot="ring1">
+                            <button class="slot-icon" data-slot="ring1" data-label="戒1" title="戒指1"></button>
+                            <span class="slot-name" id="ring1-name"></span>
+                            <button class="gem-socket" data-slot="ring1" title="镶嵌宝石" style="display: none;"></button>
+                            <select id="ring1" class="equipment-select visually-hidden">
+                                <option value="">-- 选择戒指 --</option>
+                            </select>
+                        </div>
+
+                        <div class="equipment-slot" data-slot="ring2">
+                            <button class="slot-icon" data-slot="ring2" data-label="戒2" title="戒指2"></button>
+                            <span class="slot-name" id="ring2-name"></span>
+                            <button class="gem-socket" data-slot="ring2" title="镶嵌宝石" style="display: none;"></button>
+                            <select id="ring2" class="equipment-select visually-hidden">
+                                <option value="">-- 选择戒指 --</option>
+                            </select>
+                        </div>
+
+                        <div class="equipment-slot" data-slot="relic1">
+                            <button class="slot-icon" data-slot="relic1" data-label="遗1" title="遗物1"></button>
+                            <span class="slot-name" id="relic1-name"></span>
+                            <button class="gem-socket" data-slot="relic1" title="镶嵌宝石" style="display: none;"></button>
+                            <select id="relic1" class="equipment-select visually-hidden">
+                                <option value="">-- 选择遗物 --</option>
+                            </select>
+                        </div>
+
+                        <div class="equipment-slot" data-slot="relic2">
+                            <button class="slot-icon" data-slot="relic2" data-label="遗2" title="遗物2"></button>
+                            <span class="slot-name" id="relic2-name"></span>
+                            <button class="gem-socket" data-slot="relic2" title="镶嵌宝石" style="display: none;"></button>
+                            <select id="relic2" class="equipment-select visually-hidden">
+                                <option value="">-- 选择遗物 --</option>
+                            </select>
+                        </div>
+
+                        <div class="equipment-slot" data-slot="weapon">
+                            <button class="slot-icon" data-slot="weapon" data-label="武" title="武器"></button>
+                            <span class="slot-name" id="weapon-name"></span>
+                            <button class="gem-socket" data-slot="weapon" title="镶嵌宝石" style="display: none;"></button>
+                            <select id="weapon" class="equipment-select visually-hidden">
+                                <option value="">-- 选择武器 --</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="set-bonus-panel">
+                    <h3>已激活的套装效果</h3>
+                    <div id="setBonus" class="set-bonus"></div>
+                </div>
+            </div>
+
+            <div class="stats-panel">
+                <h2>属性统计</h2>
+
+                <div class="stat-section">
+                    <h3>属性</h3>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <span class="stat-label">生命值</span>
+                            <span class="stat-value" id="health">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">护甲</span>
+                            <span class="stat-value" id="armor">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">物伤减免</span>
+                            <span class="stat-value" id="physicalDR">0%</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">魔伤减免</span>
+                            <span class="stat-value" id="magicDR">0%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stat-section">
+                    <h3>主要</h3>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <span class="stat-label">耐力</span>
+                            <span class="stat-value" id="stamina">0</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">智力</span>
+                            <span class="stat-value" id="intellect">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stat-section">
+                    <h3>次要</h3>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <span class="stat-label">暴击</span>
+                            <span class="stat-value" id="crit">0%</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">精通</span>
+                            <span class="stat-value" id="mastery">0%</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">急速</span>
+                            <span class="stat-value" id="haste">0%</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">灵魂</span>
+                            <span class="stat-value" id="spirit">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="stat-section">
+                    <h3>三级</h3>
+                    <div class="stats-grid">
+                        <div class="stat-item">
+                            <span class="stat-label">闪避</span>
+                            <span class="stat-value" id="dodge">0%</span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-label">移动速度</span>
+                            <span class="stat-value" id="moveSpeed">0%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="weapon-skill-panel">
+                    <h3>武器技能</h3>
+                    <div id="weaponSkill" class="weapon-skill"></div>
+                </div>
+
+                <div class="relic-skill-panel">
+                    <h3>遗物技能</h3>
+                    <div id="relicSkill" class="relic-skill"></div>
+                </div>
+
+                <div class="legendary-effect-panel">
+                    <h3>传奇特效</h3>
+                    <div id="legendaryEffect" class="legendary-effect"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 装备选择弹窗 -->
+        <div id="pickerModal" class="picker-modal hidden">
+            <div class="picker-dialog">
+                <div class="picker-header">
+                    <div id="pickerTitle">选择装备</div>
+                    <button id="pickerClose" class="picker-close">×</button>
+                </div>
+                <div id="pickerList" class="picker-list"></div>
+            </div>
+        </div>
+
+        <!-- 宝石选择弹窗 -->
+        <div id="gemPickerModal" class="picker-modal hidden">
+            <div class="picker-dialog">
+                <div class="picker-header">
+                    <div id="gemPickerTitle">选择宝石</div>
+                    <button id="gemPickerClose" class="picker-close">×</button>
+                </div>
+                <div class="gem-picker-content">
+                    <div class="gem-picker-section" id="gemTypeSelection">
+                        <h4>选择宝石种类</h4>
+                        <div id="gemTypeList" class="gem-type-list"></div>
+                    </div>
+                    <div class="gem-picker-section hidden" id="gemSizeSelection">
+                        <h4>选择宝石尺寸</h4>
+                        <div id="gemSizeList" class="gem-picker-list"></div>
+                    </div>
+                    <div class="gem-picker-section" id="essenceSelection">
+                        <h4>源质加成</h4>
+                        <div class="essence-options">
+                            <button class="essence-btn" data-essence="0">+0%</button>
+                            <button class="essence-btn active" data-essence="35">+35%</button>
+                            <button class="essence-btn" data-essence="100">+100%</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="gem-skills-panel" id="gemSkillsPanel">
+            <h2>已激活的宝石技能</h2>
+            <div id="gemSkillsList" class="gem-skills-list"></div>
+        </div>
+
+        <div class="build-list-panel" id="buildListPanel">
+            <h2>已保存的Build</h2>
+            <div id="buildList" class="build-list"></div>
+        </div>
+    </div>
+
+    <script src="data-loader.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
+

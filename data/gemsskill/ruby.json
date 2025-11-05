@@ -1,0 +1,87 @@
+[
+    {
+        "id": "ruby_minotaur_strength",
+        "name": "米诺陶之力",
+        "description": "生命值高于80% 时,主要属性提高3%。",
+        "energyRequirement": 120,
+        "icon": "assets/icons/gemsskill/ruby/minotaur_strength.png",
+        "tier": 1
+    },
+    {
+        "id": "ruby_minotaur_strength_ii",
+        "name": "米诺陶之力 II",
+        "description": "生命值高于 80% 时,主要属性提高 9%。",
+        "energyRequirement": 1200,
+        "icon": "assets/icons/gemsskill/ruby/minotaur_strength.png",
+        "tier": 2,
+        "replaces": "ruby_minotaur_strength"
+    },
+    {
+        "id": "ruby_heart_brave",
+        "name": "勇者之心",
+        "description": "+140 耐力\n+8 力量/智力/敏捷",
+        "energyRequirement": 240,
+        "icon": "assets/icons/gemsskill/ruby/heart_brave.png",
+        "tier": 1
+    },
+    {
+        "id": "ruby_heart_brave_ii",
+        "name": "勇者之心 II",
+        "description": "+420 耐力\n+24 力量/智力/敏捷",
+        "energyRequirement": 1560,
+        "icon": "assets/icons/gemsskill/ruby/heart_brave.png",
+        "tier": 2,
+        "replaces": "ruby_heart_brave"
+    },
+    {
+        "id": "ruby_indomitable_vitality",
+        "name": "不屈生机",
+        "description": "战斗中,你每2秒恢复 0.7% 的最大生命值。",
+        "energyRequirement": 480,
+        "icon": "assets/icons/gemsskill/ruby/indomitable_vitality.png",
+        "tier": 1
+    },
+    {
+        "id": "ruby_indomitable_vitality_ii",
+        "name": "不屈生机 II",
+        "description": "战斗中,你每 2 秒恢复 2.1% 的最大生命值。",
+        "energyRequirement": 1920,
+        "icon": "assets/icons/gemsskill/ruby/indomitable_vitality.png",
+        "tier": 2,
+        "replaces": "ruby_indomitable_vitality"
+    },
+    {
+        "id": "ruby_titan_blood",
+        "name": "泰坦之血",
+        "description": "+3% 耐力",
+        "energyRequirement": 720,
+        "icon": "assets/icons/gemsskill/ruby/titan_blood.png",
+        "tier": 1
+    },
+    {
+        "id": "ruby_titan_blood_ii",
+        "name": "泰坦之血 II",
+        "description": "+9% 耐力",
+        "energyRequirement": 2280,
+        "icon": "assets/icons/gemsskill/ruby/titan_blood.png",
+        "tier": 2,
+        "replaces": "ruby_titan_blood"
+    },
+    {
+        "id": "ruby_conqueror_blessing",
+        "name": "征服者祝福",
+        "description": "头目战中,你的伤害、治疗和护盾提高 4%。",
+        "energyRequirement": 960,
+        "icon": "assets/icons/gemsskill/ruby/conqueror_blessing.png",
+        "tier": 1
+    },
+    {
+        "id": "ruby_conqueror_blessing_ii",
+        "name": "征服者祝福 II",
+        "description": "头目战中,你的伤害、治疗和护盾提高 12%。",
+        "energyRequirement": 2640,
+        "icon": "assets/icons/gemsskill/ruby/conqueror_blessing.png",
+        "tier": 2,
+        "replaces": "ruby_conqueror_soul"
+    }
+]

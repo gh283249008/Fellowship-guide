@@ -1,0 +1,7 @@
+[
+    { "id": "hands_basic", "name": "基础手套", "icon": "DEFAULT", "defense": 12, "health": 25 },
+    { "id": "hands_iron", "name": "铁制手套", "icon": "DEFAULT", "defense": 20, "health": 40 },
+    { "id": "hands_magic", "name": "魔法手套", "icon": "DEFAULT", "defense": 15, "mana": 25, "cooldown": 5 },
+    { "id": "hands_combat", "name": "战斗手套", "icon": "DEFAULT", "defense": 18, "attack": 15, "critRate": 5 }
+]
+

@@ -1,0 +1,87 @@
+[
+    {
+        "id": "amethyst_fate_judgment",
+        "name": "命运裁决",
+        "description": "对生命值高于 50% 的目标,你的伤害与治疗效果会获得 +10% 的暴击率。",
+        "energyRequirement": 120,
+        "icon": "assets/icons/gemsskill/amethyst/fate_judgment.png",
+        "tier": 1
+    },
+    {
+        "id": "amethyst_fate_judgment_ii",
+        "name": "命运裁决 II",
+        "description": "对生命值高于 50% 的目标,你的伤害与治疗效果会获得 +30% 的暴击率。",
+        "energyRequirement": 1200,
+        "icon": "assets/icons/gemsskill/amethyst/fate_judgment.png",
+        "tier": 2,
+        "replaces": "amethyst_fate_judgment"
+    },
+    {
+        "id": "amethyst_fervent_battle",
+        "name": "狂热战意",
+        "description": "+100 耐力\n+100 暴击",
+        "energyRequirement": 240,
+        "icon": "assets/icons/gemsskill/amethyst/fervent_battle.png",
+        "tier": 1
+    },
+    {
+        "id": "amethyst_fervent_battle_ii",
+        "name": "狂热战意 II",
+        "description": "+300 耐力\n+300 暴击",
+        "energyRequirement": 1560,
+        "icon": "assets/icons/gemsskill/amethyst/fervent_battle.png",
+        "tier": 2,
+        "replaces": "amethyst_fervent_battle"
+    },
+    {
+        "id": "amethyst_reaper_breath",
+        "name": "死神之息",
+        "description": "当你造成过伤害的敌人死亡时,你将获得死神之息效果,在18秒内为你恢复 12% 最大生命值。",
+        "energyRequirement": 480,
+        "icon": "assets/icons/gemsskill/amethyst/reaper_breath.png",
+        "tier": 1
+    },
+    {
+        "id": "amethyst_reaper_breath_ii",
+        "name": "死神之息 II",
+        "description": "当你造成过伤害的敌人死亡时,你将获得死神之息效果,在 18 秒内为你恢复 36% 最大生命值。",
+        "energyRequirement": 1920,
+        "icon": "assets/icons/gemsskill/amethyst/reaper_breath.png",
+        "tier": 2,
+        "replaces": "amethyst_reaper_breath"
+    },
+    {
+        "id": "amethyst_killing_instinct",
+        "name": "杀戮本能",
+        "description": "+3% 暴击率",
+        "energyRequirement": 720,
+        "icon": "assets/icons/gemsskill/amethyst/killing_instinct.png",
+        "tier": 1
+    },
+    {
+        "id": "amethyst_killing_instinct_ii",
+        "name": "杀戮本能 II",
+        "description": "+9% 暴击率",
+        "energyRequirement": 2280,
+        "icon": "assets/icons/gemsskill/amethyst/killing_instinct.png",
+        "tier": 2,
+        "replaces": "amethyst_killing_instinct"
+    },
+    {
+        "id": "amethyst_reaper_blessing",
+        "name": "夺命者祝福",
+        "description": "你的暴击造成的伤害和治疗效果提升4%。",
+        "energyRequirement": 960,
+        "icon": "assets/icons/gemsskill/amethyst/reaper_blessing.png",
+        "tier": 1
+    },
+    {
+        "id": "amethyst_reaper_blessing_ii",
+        "name": "夺命者祝福 II",
+        "description": "你的暴击伤害与产生的治疗效果提高 12%。",
+        "energyRequirement": 2640,
+        "icon": "assets/icons/gemsskill/amethyst/reaper_blessing.png",
+        "tier": 2,
+        "replaces": "amethyst_reaper_blessing"
+    }
+]

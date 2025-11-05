@@ -1,0 +1,87 @@
+[
+    {
+        "id": "emerald_first_strike",
+        "name": "先发制人",
+        "description": "首次对任意敌人造成伤害时,精通提高 5%,持续 15秒。",
+        "energyRequirement": 120,
+        "icon": "assets/icons/gemsskill/emerald/first_strike.png",
+        "tier": 1
+    },
+    {
+        "id": "emerald_first_strike_ii",
+        "name": "先发制人 II",
+        "description": "首次对任意敌人造成伤害时,精通提高 15%,持续 15 秒。",
+        "energyRequirement": 1200,
+        "icon": "assets/icons/gemsskill/emerald/first_strike.png",
+        "tier": 2,
+        "replaces": "emerald_first_strike"
+    },
+    {
+        "id": "emerald_vanguard_will",
+        "name": "先锋意志",
+        "description": "+100 耐力\n+100 精通",
+        "energyRequirement": 240,
+        "icon": "assets/icons/gemsskill/emerald/vanguard_will.png",
+        "tier": 1
+    },
+    {
+        "id": "emerald_vanguard_will_ii",
+        "name": "先锋意志 II",
+        "description": "+300 耐力\n+300 精通",
+        "energyRequirement": 1560,
+        "icon": "assets/icons/gemsskill/emerald/vanguard_will.png",
+        "tier": 2,
+        "replaces": "emerald_vanguard_will"
+    },
+    {
+        "id": "emerald_sentry_bulwark",
+        "name": "哨卫壁垒",
+        "description": "每60秒获得一个护盾,可吸收相当于你最大生命值 10% 的伤害。护盾持续 60 秒。",
+        "energyRequirement": 480,
+        "icon": "assets/icons/gemsskill/emerald/sentry_bulwark.png",
+        "tier": 1
+    },
+    {
+        "id": "emerald_sentry_bulwark_ii",
+        "name": "哨卫壁垒 II",
+        "description": "每60秒获得一个护盾,可吸收相当于你最大生命值 30% 的伤害。护盾持续 60秒。",
+        "energyRequirement": 1920,
+        "icon": "assets/icons/gemsskill/emerald/sentry_bulwark.png",
+        "tier": 2,
+        "replaces": "emerald_sentry_bulwark"
+    },
+    {
+        "id": "emerald_tactical_master",
+        "name": "战术大师",
+        "description": "+3% 精通",
+        "energyRequirement": 720,
+        "icon": "assets/icons/gemsskill/emerald/tactical_master.png",
+        "tier": 1
+    },
+    {
+        "id": "emerald_tactical_master_ii",
+        "name": "战术大师 II",
+        "description": "+9% 精通",
+        "energyRequirement": 2280,
+        "icon": "assets/icons/gemsskill/emerald/tactical_master.png",
+        "tier": 2,
+        "replaces": "emerald_tactical_master"
+    },
+    {
+        "id": "emerald_commander_blessing",
+        "name": "指挥官祝福",
+        "description": "你的技能冷却时间缩短4%。",
+        "energyRequirement": 960,
+        "icon": "assets/icons/gemsskill/emerald/commander_blessing.png",
+        "tier": 1
+    },
+    {
+        "id": "emerald_commander_blessing_ii",
+        "name": "指挥官祝福 II",
+        "description": "你的技能冷却时间缩短 12%。",
+        "energyRequirement": 2640,
+        "icon": "assets/icons/gemsskill/emerald/commander_blessing.png",
+        "tier": 2,
+        "replaces": "emerald_commander_soul"
+    }
+]

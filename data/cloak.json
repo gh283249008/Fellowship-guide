@@ -1,0 +1,7 @@
+[
+    { "id": "cloak_basic", "name": "基础披风", "icon": "DEFAULT", "defense": 10, "moveSpeed": 5 },
+    { "id": "cloak_magic", "name": "魔法披风", "icon": "DEFAULT", "defense": 15, "mana": 30, "moveSpeed": 8 },
+    { "id": "cloak_shadow", "name": "暗影披风", "icon": "DEFAULT", "defense": 20, "critRate": 10, "moveSpeed": 10 },
+    { "id": "cloak_legend", "name": "传说披风", "icon": "DEFAULT", "defense": 25, "health": 50, "moveSpeed": 12, "critDamage": 15 }
+]
+

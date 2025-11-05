@@ -1,0 +1,87 @@
+[
+    {
+        "id": "diamond_soul_harmony",
+        "name": "和谐之魂",
+        "description": "+0.5% 暴击\n+0.5% 急速\n+0.5% 精通\n+0.5% 灵魂",
+        "energyRequirement": 120,
+        "icon": "assets/icons/gemsskill/diamond/soul_harmony.png",
+        "tier": 1
+    },
+    {
+        "id": "diamond_soul_harmony_ii",
+        "name": "和谐之魂 II",
+        "description": "+1.5% 暴击\n+1.5% 急速\n+1.5% 精通\n+1.5% 灵魂",
+        "energyRequirement": 1200,
+        "icon": "assets/icons/gemsskill/diamond/soul_harmony.png",
+        "tier": 2,
+        "replaces": "diamond_soul_harmony"
+    },
+    {
+        "id": "diamond_tenacious_edict",
+        "name": "坚忍圣训",
+        "description": "+60 耐力\n+15 力量/智力/敏捷",
+        "energyRequirement": 240,
+        "icon": "assets/icons/gemsskill/diamond/tenacious_edict.png",
+        "tier": 1
+    },
+    {
+        "id": "diamond_tenacious_edict_ii",
+        "name": "坚忍圣训 II",
+        "description": "+180 耐力\n+45 力量/智力/敏捷",
+        "energyRequirement": 1560,
+        "icon": "assets/icons/gemsskill/diamond/tenacious_edict.png",
+        "tier": 2,
+        "replaces": "diamond_tenacious_edict"
+    },
+    {
+        "id": "diamond_serene_resolve",
+        "name": "宁静决心",
+        "description": "受到魔法伤害时,你将获得\"宁静决心\"效果,你受到的所有魔法伤害降低8%,持续6秒。该效果每20 秒最多触发一次。",
+        "energyRequirement": 480,
+        "icon": "assets/icons/gemsskill/diamond/serene_resolve.png",
+        "tier": 1
+    },
+    {
+        "id": "diamond_serene_resolve_ii",
+        "name": "宁静决心 II",
+        "description": "受到魔法伤害时,你将获得\"宁静决心\"效果,你受到的所有魔法伤害降低 24%,持续6秒。该效果每 20 秒最多触发一次。",
+        "energyRequirement": 1920,
+        "icon": "assets/icons/gemsskill/diamond/serene_resolve.png",
+        "tier": 2,
+        "replaces": "diamond_serene_resolve"
+    },
+    {
+        "id": "diamond_sage_wisdom",
+        "name": "先贤智慧",
+        "description": "+2% 力量/智力/敏捷",
+        "energyRequirement": 720,
+        "icon": "assets/icons/gemsskill/diamond/sage_wisdom.png",
+        "tier": 1
+    },
+    {
+        "id": "diamond_sage_wisdom_ii",
+        "name": "先贤智慧 II",
+        "description": "+6% 力量/智力/敏捷",
+        "energyRequirement": 2280,
+        "icon": "assets/icons/gemsskill/diamond/sage_wisdom.png",
+        "tier": 2,
+        "replaces": "diamond_sage_wisdom"
+    },
+    {
+        "id": "diamond_artisan_blessing",
+        "name": "工匠祝福",
+        "description": "你的遗物冷却时间缩短8%。",
+        "energyRequirement": 960,
+        "icon": "assets/icons/gemsskill/diamond/artisan_blessing.png",
+        "tier": 1
+    },
+    {
+        "id": "diamond_artisan_blessing_ii",
+        "name": "工匠祝福 II",
+        "description": "你的遗物冷却时间缩短 24%。",
+        "energyRequirement": 2640,
+        "icon": "assets/icons/gemsskill/diamond/artisan_blessing.png",
+        "tier": 2,
+        "replaces": "diamond_craftsman_soul"
+    }
+]

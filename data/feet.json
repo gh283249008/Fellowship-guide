@@ -1,0 +1,7 @@
+[
+    { "id": "feet_basic", "name": "基础靴子", "icon": "DEFAULT", "moveSpeed": 10, "defense": 10 },
+    { "id": "feet_swift", "name": "迅捷之靴", "icon": "DEFAULT", "moveSpeed": 20, "defense": 15 },
+    { "id": "feet_sturdy", "name": "坚固之靴", "icon": "DEFAULT", "defense": 30, "health": 40, "moveSpeed": 5 },
+    { "id": "feet_magic", "name": "魔法靴子", "icon": "DEFAULT", "moveSpeed": 15, "mana": 25, "cooldown": 5 }
+]
+

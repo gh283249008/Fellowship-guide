@@ -1,0 +1,33 @@
+[
+    { "id": "necklace_life", "name": "生命项链", "icon": "DEFAULT", "health": 100, "defense": 20 },
+    { "id": "necklace_mana", "name": "魔法项链", "icon": "DEFAULT", "mana": 60, "cooldown": 8 },
+    { "id": "necklace_speed", "name": "速度项链", "icon": "DEFAULT", "moveSpeed": 15, "critRate": 5 },
+    { "id": "necklace_power", "name": "力量项链", "icon": "DEFAULT", "attack": 40, "critRate": 8 },
+    { "id": "necklace_legend", "name": "传说项链", "icon": "DEFAULT", "attack": 30, "defense": 30, "health": 80, "mana": 50 },
+    {
+        "id": "3431",
+        "name": "不屈绽放护身符",
+        "icon": "assets/icons/necklace/3431.png",
+        "itemLevel": 330,
+        "stamina": 208,
+        "critRate": 70,
+        "mastery": 397,
+        "heroes": ["silvia"],
+        "rarity": "legendary",
+        "legendaryEffectName": "不屈绽放",
+        "legendaryEffectDesc": "绽放心花对玩家造成的过量治疗的 75% 会转化为护盾,至多持续 15 秒。\n\n由不屈绽放产生的护盾至多可吸收相当于 1232% 智力的伤害。"
+    },
+    {
+        "id": "3492",
+        "name": "狱主护符",
+        "icon": "assets/icons/necklace/3492.png",
+        "itemLevel": 330,
+        "stamina": 208,
+        "mastery": 70,
+        "spirit": 397,
+        "setId": "dark_prophecy",
+        "heroes": ["silvia"],
+        "noSocket": true
+    }
+]
+

@@ -1,0 +1,21 @@
+[
+    { "id": "head_basic", "name": "基础头盔", "icon": "DEFAULT", "defense": 15, "health": 30 },
+    { "id": "head_iron", "name": "铁制头盔", "icon": "DEFAULT", "defense": 25, "health": 50 },
+    { "id": "head_magic", "name": "魔法头盔", "icon": "DEFAULT", "defense": 20, "mana": 30, "cooldown": 5 },
+    { "id": "head_crown", "name": "王者之冠", "icon": "DEFAULT", "defense": 30, "health": 60, "critRate": 8, "critDamage": 10 },
+    {
+        "id": "3490",
+        "name": "狱主头巾",
+        "icon": "assets/icons/head/3490.png",
+        "itemLevel": 330,
+        "defense": 574,
+        "stamina": 400,
+        "intellect": 134,
+        "haste": 100,
+        "spirit": 234,
+        "setId": "dark_prophecy",
+        "heroes": ["silvia"],
+        "noSocket": true
+    }
+]
+

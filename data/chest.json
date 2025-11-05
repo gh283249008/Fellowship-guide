@@ -1,0 +1,22 @@
+[
+    { "id": "chest_leather", "name": "皮甲胸甲", "icon": "DEFAULT", "defense": 30, "health": 50 },
+    { "id": "chest_chain", "name": "锁子甲胸甲", "icon": "DEFAULT", "defense": 50, "health": 80 },
+    { "id": "chest_plate", "name": "板甲胸甲", "icon": "DEFAULT", "defense": 80, "health": 120, "moveSpeed": -3 },
+    { "id": "chest_magic", "name": "魔法胸甲", "icon": "DEFAULT", "defense": 60, "health": 100, "mana": 40, "cooldown": 5 },
+    { "id": "chest_dragon", "name": "龙鳞胸甲", "icon": "DEFAULT", "defense": 100, "health": 150, "critRate": 5 },
+    {
+        "id": "3488",
+        "name": "狱主皮上衣",
+        "icon": "assets/icons/chest/3488.png",
+        "itemLevel": 330,
+        "defense": 666,
+        "stamina": 489,
+        "intellect": 163,
+        "critRate": 285,
+        "spirit": 123,
+        "setId": "dark_prophecy",
+        "heroes": ["silvia"],
+        "noSocket": true
+    }
+]
+

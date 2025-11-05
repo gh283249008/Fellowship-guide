@@ -1,0 +1,242 @@
+[
+    {
+        "id": "amethyst_small",
+        "name": "小型紫水晶",
+        "type": "amethyst",
+        "typeName": "紫水晶",
+        "size": "small",
+        "sizeName": "小型",
+        "energy": 120,
+        "color": "#9b59b6"
+    },
+    {
+        "id": "amethyst_large",
+        "name": "大型紫水晶",
+        "type": "amethyst",
+        "typeName": "紫水晶",
+        "size": "large",
+        "sizeName": "大型",
+        "energy": 240,
+        "color": "#9b59b6"
+    },
+    {
+        "id": "amethyst_gorgeous",
+        "name": "华美紫水晶",
+        "type": "amethyst",
+        "typeName": "紫水晶",
+        "size": "gorgeous",
+        "sizeName": "华美",
+        "energy": 360,
+        "color": "#9b59b6"
+    },
+    {
+        "id": "amethyst_flawless",
+        "name": "无暇紫水晶",
+        "type": "amethyst",
+        "typeName": "紫水晶",
+        "size": "flawless",
+        "sizeName": "无暇",
+        "energy": 480,
+        "color": "#9b59b6"
+    },
+    {
+        "id": "diamond_small",
+        "name": "小型钻石",
+        "type": "diamond",
+        "typeName": "钻石",
+        "size": "small",
+        "sizeName": "小型",
+        "energy": 120,
+        "color": "#ffffff"
+    },
+    {
+        "id": "diamond_large",
+        "name": "大型钻石",
+        "type": "diamond",
+        "typeName": "钻石",
+        "size": "large",
+        "sizeName": "大型",
+        "energy": 240,
+        "color": "#ffffff"
+    },
+    {
+        "id": "diamond_gorgeous",
+        "name": "华美钻石",
+        "type": "diamond",
+        "typeName": "钻石",
+        "size": "gorgeous",
+        "sizeName": "华美",
+        "energy": 360,
+        "color": "#ffffff"
+    },
+    {
+        "id": "diamond_flawless",
+        "name": "无暇钻石",
+        "type": "diamond",
+        "typeName": "钻石",
+        "size": "flawless",
+        "sizeName": "无暇",
+        "energy": 480,
+        "color": "#ffffff"
+    },
+    {
+        "id": "emerald_small",
+        "name": "小型绿宝石",
+        "type": "emerald",
+        "typeName": "绿宝石",
+        "size": "small",
+        "sizeName": "小型",
+        "energy": 120,
+        "color": "#2ecc71"
+    },
+    {
+        "id": "emerald_large",
+        "name": "大型绿宝石",
+        "type": "emerald",
+        "typeName": "绿宝石",
+        "size": "large",
+        "sizeName": "大型",
+        "energy": 240,
+        "color": "#2ecc71"
+    },
+    {
+        "id": "emerald_gorgeous",
+        "name": "华美绿宝石",
+        "type": "emerald",
+        "typeName": "绿宝石",
+        "size": "gorgeous",
+        "sizeName": "华美",
+        "energy": 360,
+        "color": "#2ecc71"
+    },
+    {
+        "id": "emerald_flawless",
+        "name": "无暇绿宝石",
+        "type": "emerald",
+        "typeName": "绿宝石",
+        "size": "flawless",
+        "sizeName": "无暇",
+        "energy": 480,
+        "color": "#2ecc71"
+    },
+    {
+        "id": "ruby_small",
+        "name": "小型红宝石",
+        "type": "ruby",
+        "typeName": "红宝石",
+        "size": "small",
+        "sizeName": "小型",
+        "energy": 120,
+        "color": "#e74c3c"
+    },
+    {
+        "id": "ruby_large",
+        "name": "大型红宝石",
+        "type": "ruby",
+        "typeName": "红宝石",
+        "size": "large",
+        "sizeName": "大型",
+        "energy": 240,
+        "color": "#e74c3c"
+    },
+    {
+        "id": "ruby_gorgeous",
+        "name": "华美红宝石",
+        "type": "ruby",
+        "typeName": "红宝石",
+        "size": "gorgeous",
+        "sizeName": "华美",
+        "energy": 360,
+        "color": "#e74c3c"
+    },
+    {
+        "id": "ruby_flawless",
+        "name": "无暇红宝石",
+        "type": "ruby",
+        "typeName": "红宝石",
+        "size": "flawless",
+        "sizeName": "无暇",
+        "energy": 480,
+        "color": "#e74c3c"
+    },
+    {
+        "id": "sapphire_small",
+        "name": "小型蓝宝石",
+        "type": "sapphire",
+        "typeName": "蓝宝石",
+        "size": "small",
+        "sizeName": "小型",
+        "energy": 120,
+        "color": "#3498db"
+    },
+    {
+        "id": "sapphire_large",
+        "name": "大型蓝宝石",
+        "type": "sapphire",
+        "typeName": "蓝宝石",
+        "size": "large",
+        "sizeName": "大型",
+        "energy": 240,
+        "color": "#3498db"
+    },
+    {
+        "id": "sapphire_gorgeous",
+        "name": "华美蓝宝石",
+        "type": "sapphire",
+        "typeName": "蓝宝石",
+        "size": "gorgeous",
+        "sizeName": "华美",
+        "energy": 360,
+        "color": "#3498db"
+    },
+    {
+        "id": "sapphire_flawless",
+        "name": "无暇蓝宝石",
+        "type": "sapphire",
+        "typeName": "蓝宝石",
+        "size": "flawless",
+        "sizeName": "无暇",
+        "energy": 480,
+        "color": "#3498db"
+    },
+    {
+        "id": "topaz_small",
+        "name": "小型黄玉",
+        "type": "topaz",
+        "typeName": "黄玉",
+        "size": "small",
+        "sizeName": "小型",
+        "energy": 120,
+        "color": "#f39c12"
+    },
+    {
+        "id": "topaz_large",
+        "name": "大型黄玉",
+        "type": "topaz",
+        "typeName": "黄玉",
+        "size": "large",
+        "sizeName": "大型",
+        "energy": 240,
+        "color": "#f39c12"
+    },
+    {
+        "id": "topaz_gorgeous",
+        "name": "华美黄玉",
+        "type": "topaz",
+        "typeName": "黄玉",
+        "size": "gorgeous",
+        "sizeName": "华美",
+        "energy": 360,
+        "color": "#f39c12"
+    },
+    {
+        "id": "topaz_flawless",
+        "name": "无暇黄玉",
+        "type": "topaz",
+        "typeName": "黄玉",
+        "size": "flawless",
+        "sizeName": "无暇",
+        "energy": 480,
+        "color": "#f39c12"
+    }
+]

@@ -843,10 +843,10 @@ class BuildSimulator {
         const percentStatMultiplierPatterns = [
             { pattern: /\+(\d+(?:\.\d+)?)%\s*耐力/g, stat: 'staminaPercentMultiplier' },
             { pattern: /\+(\d+(?:\.\d+)?)%\s*智力/g, stat: 'intellectPercentMultiplier' },
-            { pattern: /\+(\d+(?:\.\d+)?)%\s*暴击(?!率)/g, stat: 'critRatePercentMultiplier' }, // "+0.5% 暴击"
-            { pattern: /\+(\d+(?:\.\d+)?)%\s*精通(?!率)/g, stat: 'masteryPercentMultiplier' }, // "+3% 精通"
-            { pattern: /\+(\d+(?:\.\d+)?)%\s*急速(?!率)/g, stat: 'hastePercentMultiplier' }, // "+3% 急速"
-            { pattern: /\+(\d+(?:\.\d+)?)%\s*灵魂(?!率)/g, stat: 'spiritPercentMultiplier' },
+            { pattern: /\+(\d+(?:\.\d+)?)%\s*暴击(?!率|值)/g, stat: 'critRatePercentMultiplier' }, // "+0.5% 暴击"，不匹配"暴击率"或"暴击值"
+            { pattern: /\+(\d+(?:\.\d+)?)%\s*精通(?!率|值)/g, stat: 'masteryPercentMultiplier' }, // "+3% 精通"，不匹配"精通率"或"精通值"
+            { pattern: /\+(\d+(?:\.\d+)?)%\s*急速(?!率|值)/g, stat: 'hastePercentMultiplier' }, // "+3% 急速"，不匹配"急速率"或"急速值"
+            { pattern: /\+(\d+(?:\.\d+)?)%\s*灵魂(?!率|值)/g, stat: 'spiritPercentMultiplier' }, // 匹配单独的"灵魂"，不匹配"灵魂率"或"灵魂值"
             { pattern: /\+(\d+(?:\.\d+)?)%\s*灵魂值/g, stat: 'spiritPercentMultiplier' },
             // 力量/智力/敏捷百分比加成
             { pattern: /\+(\d+(?:\.\d+)?)%\s*力量\/智力\/敏捷/g, stat: 'intellectPercentMultiplier' }
@@ -899,7 +899,8 @@ class BuildSimulator {
                     if (stat === 'id' || stat === 'name' || stat === 'icon' || stat === 'heroes' || 
                         stat === 'abilityName' || stat === 'abilityDesc' || stat === 'abilityCritBonus' ||
                         stat === 'relicAbilityName' || stat === 'relicAbilityDesc' ||
-                        stat === 'rarity' || stat === 'legendaryEffectName' || stat === 'legendaryEffectDesc') {
+                        stat === 'rarity' || stat === 'legendaryEffectName' || stat === 'legendaryEffectDesc' ||
+                        stat === 'dropLocation') {
                         return;
                     }
                     // 如果属性值是数字，则累加
@@ -933,66 +934,244 @@ class BuildSimulator {
             });
         });
         
-        // 应用百分比属性加成（使用乘法公式：属性 * (1 + 总百分比)）
-        // 注意：这些需要在计算派生属性之前应用
-        // 先累加所有百分比加成，然后一次性应用
+        // 步骤1：先计算基础属性（已经完成，上面已经累加了所有装备属性）
+        
+        // 步骤2：应用递减系数，将属性值转换为百分比
+        this.calculateDerivedStats(stats);
+        
+        // 步骤3：应用百分比属性加成（对百分比的加成）
+        // 包括：
+        // 1. 对属性值的百分比加成（如"+3% 暴击"），在转换为百分比后应用
+        // 2. 对百分比的直接加成（如"+5% 暴击率"）
+        
+        // 收集所有百分比加成和来源信息（都是加算）
         let totalStaminaPercent = 0;
         let totalIntellectPercent = 0;
-        let totalCritRatePercent = 0;
-        let totalMasteryPercent = 0;
-        let totalHastePercent = 0;
-        let totalSpiritPercent = 0;
         
+        // 记录加成来源（用于工具提示）
+        stats.attributeDetails = {
+            critRate: {
+                baseValue: stats.critRate || 0,
+                diminishPercent: stats.critRatePercent || 0,
+                percentMultiplier: 0,
+                percentBonus: 0,
+                sources: []
+            },
+            mastery: {
+                baseValue: stats.mastery || 0,
+                diminishPercent: stats.masteryRatePercent || 0,
+                percentMultiplier: 0,
+                percentBonus: 0,
+                sources: []
+            },
+            haste: {
+                baseValue: stats.haste || 0,
+                diminishPercent: stats.hasteRatePercent || 0,
+                percentMultiplier: 0,
+                percentBonus: 0,
+                sources: []
+            },
+            spirit: {
+                baseValue: stats.spirit || 0,
+                diminishPercent: stats.spiritRatePercent || 0,
+                percentMultiplier: 0,
+                percentBonus: 0,
+                sources: []
+            }
+        };
+        
+        // 收集所有百分比直接加成（包括percentMultiplier和percentBonus，都是加算）
+        let totalCritRatePercentBonus = 0;
+        let totalMasteryPercentBonus = 0;
+        let totalHastePercentBonus = 0;
+        let totalSpiritPercentBonus = 0;
+        
+        // 应用英雄基础百分比加成
+        const currentHero = this.getHeroStats();
+        if (currentHero && currentHero.id === 'silvia') {
+            // 希尔薇基础暴击率加成：+5%
+            totalCritRatePercentBonus += 5;
+            stats.attributeDetails.critRate.sources.push({
+                type: 'hero',
+                name: '希尔薇',
+                value: '+5% 暴击率'
+            });
+        }
+        
+        // 应用宝石技能的百分比加成（加算）
         activeSkills.forEach(skill => {
             const skillStats = this.parseSkillStats(skill.description);
+            
+            // 收集一级和二级属性的百分比加成
             totalStaminaPercent += skillStats.staminaPercentMultiplier || 0;
             totalIntellectPercent += skillStats.intellectPercentMultiplier || 0;
-            totalCritRatePercent += skillStats.critRatePercentMultiplier || 0;
-            totalMasteryPercent += skillStats.masteryPercentMultiplier || 0;
-            totalHastePercent += skillStats.hastePercentMultiplier || 0;
-            totalSpiritPercent += skillStats.spiritPercentMultiplier || 0;
+            
+            // percentMultiplier 也是加算（如"+3% 暴击"）
+            if (skillStats.critRatePercentMultiplier) {
+                totalCritRatePercentBonus += skillStats.critRatePercentMultiplier;
+                stats.attributeDetails.critRate.sources.push({
+                    type: 'gem',
+                    name: skill.name,
+                    value: `+${skillStats.critRatePercentMultiplier}% 暴击`
+                });
+            }
+            if (skillStats.masteryPercentMultiplier) {
+                totalMasteryPercentBonus += skillStats.masteryPercentMultiplier;
+                stats.attributeDetails.mastery.sources.push({
+                    type: 'gem',
+                    name: skill.name,
+                    value: `+${skillStats.masteryPercentMultiplier}% 精通`
+                });
+            }
+            if (skillStats.hastePercentMultiplier) {
+                totalHastePercentBonus += skillStats.hastePercentMultiplier;
+                stats.attributeDetails.haste.sources.push({
+                    type: 'gem',
+                    name: skill.name,
+                    value: `+${skillStats.hastePercentMultiplier}% 急速`
+                });
+            }
+            if (skillStats.spiritPercentMultiplier) {
+                totalSpiritPercentBonus += skillStats.spiritPercentMultiplier;
+                stats.attributeDetails.spirit.sources.push({
+                    type: 'gem',
+                    name: skill.name,
+                    value: `+${skillStats.spiritPercentMultiplier}% 灵魂`
+                });
+            }
+            
+            // percentBonus 也是加算（如"+5% 暴击率"）
+            if (skillStats.critRatePercentBonus > 0) {
+                totalCritRatePercentBonus += skillStats.critRatePercentBonus;
+                stats.attributeDetails.critRate.sources.push({
+                    type: 'gem',
+                    name: skill.name,
+                    value: `+${skillStats.critRatePercentBonus}% 暴击率`
+                });
+            }
+            if (skillStats.masteryRatePercentBonus > 0) {
+                totalMasteryPercentBonus += skillStats.masteryRatePercentBonus;
+                stats.attributeDetails.mastery.sources.push({
+                    type: 'gem',
+                    name: skill.name,
+                    value: `+${skillStats.masteryRatePercentBonus}% 精通率`
+                });
+            }
+            if (skillStats.hasteRatePercentBonus > 0) {
+                totalHastePercentBonus += skillStats.hasteRatePercentBonus;
+                stats.attributeDetails.haste.sources.push({
+                    type: 'gem',
+                    name: skill.name,
+                    value: `+${skillStats.hasteRatePercentBonus}% 急速率`
+                });
+            }
+            if (skillStats.spiritRatePercentBonus > 0) {
+                totalSpiritPercentBonus += skillStats.spiritRatePercentBonus;
+                stats.attributeDetails.spirit.sources.push({
+                    type: 'gem',
+                    name: skill.name,
+                    value: `+${skillStats.spiritRatePercentBonus}% 灵魂率`
+                });
+            }
         });
         
-        // 应用累加后的百分比加成
+        // 应用套装效果的百分比加成（加算）
+        const activeSetBonuses = this.getActiveSetBonuses();
+        activeSetBonuses.forEach(bonus => {
+            const setBonusStats = this.parseSkillStats(bonus.description);
+            
+            // 收集一级和二级属性的百分比加成
+            totalStaminaPercent += setBonusStats.staminaPercentMultiplier || 0;
+            totalIntellectPercent += setBonusStats.intellectPercentMultiplier || 0;
+            
+            // percentMultiplier 也是加算
+            if (setBonusStats.critRatePercentMultiplier) {
+                totalCritRatePercentBonus += setBonusStats.critRatePercentMultiplier;
+                stats.attributeDetails.critRate.sources.push({
+                    type: 'set',
+                    name: bonus.setName,
+                    value: `+${setBonusStats.critRatePercentMultiplier}% 暴击`
+                });
+            }
+            if (setBonusStats.masteryPercentMultiplier) {
+                totalMasteryPercentBonus += setBonusStats.masteryPercentMultiplier;
+                stats.attributeDetails.mastery.sources.push({
+                    type: 'set',
+                    name: bonus.setName,
+                    value: `+${setBonusStats.masteryPercentMultiplier}% 精通`
+                });
+            }
+            if (setBonusStats.hastePercentMultiplier) {
+                totalHastePercentBonus += setBonusStats.hastePercentMultiplier;
+                stats.attributeDetails.haste.sources.push({
+                    type: 'set',
+                    name: bonus.setName,
+                    value: `+${setBonusStats.hastePercentMultiplier}% 急速`
+                });
+            }
+            if (setBonusStats.spiritPercentMultiplier) {
+                totalSpiritPercentBonus += setBonusStats.spiritPercentMultiplier;
+                stats.attributeDetails.spirit.sources.push({
+                    type: 'set',
+                    name: bonus.setName,
+                    value: `+${setBonusStats.spiritPercentMultiplier}% 灵魂`
+                });
+            }
+            
+            // percentBonus 也是加算
+            if (setBonusStats.critRatePercentBonus > 0) {
+                totalCritRatePercentBonus += setBonusStats.critRatePercentBonus;
+                stats.attributeDetails.critRate.sources.push({
+                    type: 'set',
+                    name: bonus.setName,
+                    value: `+${setBonusStats.critRatePercentBonus}% 暴击率`
+                });
+            }
+            if (setBonusStats.masteryRatePercentBonus > 0) {
+                totalMasteryPercentBonus += setBonusStats.masteryRatePercentBonus;
+                stats.attributeDetails.mastery.sources.push({
+                    type: 'set',
+                    name: bonus.setName,
+                    value: `+${setBonusStats.masteryRatePercentBonus}% 精通率`
+                });
+            }
+            if (setBonusStats.hasteRatePercentBonus > 0) {
+                totalHastePercentBonus += setBonusStats.hasteRatePercentBonus;
+                stats.attributeDetails.haste.sources.push({
+                    type: 'set',
+                    name: bonus.setName,
+                    value: `+${setBonusStats.hasteRatePercentBonus}% 急速率`
+                });
+            }
+            if (setBonusStats.spiritRatePercentBonus > 0) {
+                totalSpiritPercentBonus += setBonusStats.spiritRatePercentBonus;
+                stats.attributeDetails.spirit.sources.push({
+                    type: 'set',
+                    name: bonus.setName,
+                    value: `+${setBonusStats.spiritRatePercentBonus}% 灵魂率`
+                });
+            }
+        });
+        
+        // 记录总加成（用于工具提示）
+        stats.attributeDetails.critRate.percentMultiplier = totalCritRatePercentBonus;
+        stats.attributeDetails.mastery.percentMultiplier = totalMasteryPercentBonus;
+        stats.attributeDetails.haste.percentMultiplier = totalHastePercentBonus;
+        stats.attributeDetails.spirit.percentMultiplier = totalSpiritPercentBonus;
+        
+        // 应用所有百分比加成（都是加算）
+        stats.critRatePercent = (stats.critRatePercent || 0) + totalCritRatePercentBonus;
+        stats.masteryRatePercent = (stats.masteryRatePercent || 0) + totalMasteryPercentBonus;
+        stats.hasteRatePercent = (stats.hasteRatePercent || 0) + totalHastePercentBonus;
+        stats.spiritRatePercent = (stats.spiritRatePercent || 0) + totalSpiritPercentBonus;
+        
+        // 对一级和二级属性的百分比加成（在递减之前应用）
         if (totalStaminaPercent > 0) {
             stats.stamina = (stats.stamina || 0) * (1 + totalStaminaPercent / 100);
         }
         if (totalIntellectPercent > 0) {
             stats.intellect = (stats.intellect || 0) * (1 + totalIntellectPercent / 100);
         }
-        if (totalCritRatePercent > 0) {
-            stats.critRate = (stats.critRate || 0) * (1 + totalCritRatePercent / 100);
-        }
-        if (totalMasteryPercent > 0) {
-            stats.mastery = (stats.mastery || 0) * (1 + totalMasteryPercent / 100);
-        }
-        if (totalHastePercent > 0) {
-            stats.haste = (stats.haste || 0) * (1 + totalHastePercent / 100);
-        }
-        if (totalSpiritPercent > 0) {
-            stats.spirit = (stats.spirit || 0) * (1 + totalSpiritPercent / 100);
-        }
-        
-        // 计算派生属性（暴击率、精通率、急速率、灵魂率）
-        this.calculateDerivedStats(stats);
-        
-        // 应用宝石技能的百分比率加成（在计算完派生属性后）
-        activeSkills.forEach(skill => {
-            const skillStats = this.parseSkillStats(skill.description);
-            // 应用百分比率加成到派生属性
-            if (skillStats.critRatePercentBonus > 0) {
-                stats.critRatePercent += skillStats.critRatePercentBonus;
-            }
-            if (skillStats.masteryRatePercentBonus > 0) {
-                stats.masteryRatePercent += skillStats.masteryRatePercentBonus;
-            }
-            if (skillStats.hasteRatePercentBonus > 0) {
-                stats.hasteRatePercent += skillStats.hasteRatePercentBonus;
-            }
-            if (skillStats.spiritRatePercentBonus > 0) {
-                stats.spiritRatePercent += skillStats.spiritRatePercentBonus;
-            }
-        });
         
         return stats;
     }
@@ -1021,14 +1200,57 @@ class BuildSimulator {
     }
     
     /**
+     * 计算带递减系数的属性百分比
+     * 规则：
+     * - 1点属性 = 0.017% 率值
+     * - 0-10%：无折扣
+     * - 10-15%：超出10%的部分 × 95%
+     * - 15-20%：超出15%的部分 × 90%
+     * - 20-25%：超出20%的部分 × 85%
+     * - 25%以上：超出25%的部分 × 80%
+     * @param {number} attributeValue - 属性值
+     * @returns {number} - 计算后的百分比
+     */
+    calculateAttributeRateWithDiminishing(attributeValue) {
+        // 基础转换：1点属性 = 0.017%
+        const baseRate = attributeValue * 0.017;
+        
+        if (baseRate <= 10) {
+            return baseRate;
+        }
+        
+        let result = 10; // 0-10%部分，无折扣
+        
+        if (baseRate > 10) {
+            const range10_15 = Math.min(baseRate, 15) - 10;
+            result += range10_15 * 0.95; // 10-15%部分，95%折扣
+        }
+        
+        if (baseRate > 15) {
+            const range15_20 = Math.min(baseRate, 20) - 15;
+            result += range15_20 * 0.90; // 15-20%部分，90%折扣
+        }
+        
+        if (baseRate > 20) {
+            const range20_25 = Math.min(baseRate, 25) - 20;
+            result += range20_25 * 0.85; // 20-25%部分，85%折扣
+        }
+        
+        if (baseRate > 25) {
+            const range25Plus = baseRate - 25;
+            result += range25Plus * 0.80; // 25%以上部分，80%折扣
+        }
+        
+        return result;
+    }
+    
+    /**
      * 计算暴击率百分比
      * @param {number} critRate - 暴击属性值
      * @returns {number} - 暴击率百分比（0-100）
      */
     calculateCritRatePercent(critRate) {
-        // 计算公式：可在此处调整
-        // 示例：假设每100点暴击属性 = 1%暴击率
-        return critRate / 100;
+        return this.calculateAttributeRateWithDiminishing(critRate);
     }
     
     /**
@@ -1037,9 +1259,7 @@ class BuildSimulator {
      * @returns {number} - 精通率百分比（0-100）
      */
     calculateMasteryRatePercent(mastery) {
-        // 计算公式：可在此处调整
-        // 示例：假设每100点精通属性 = 1%精通率
-        return mastery / 100;
+        return this.calculateAttributeRateWithDiminishing(mastery);
     }
     
     /**
@@ -1048,9 +1268,7 @@ class BuildSimulator {
      * @returns {number} - 急速率百分比（0-100）
      */
     calculateHasteRatePercent(haste) {
-        // 计算公式：可在此处调整
-        // 示例：假设每100点急速属性 = 1%急速率
-        return haste / 100;
+        return this.calculateAttributeRateWithDiminishing(haste);
     }
     
     /**
@@ -1059,13 +1277,21 @@ class BuildSimulator {
      * @returns {number} - 灵魂率百分比（0-100）
      */
     calculateSpiritRatePercent(spirit) {
-        // 计算公式：可在此处调整
-        // 示例：假设每100点灵魂属性 = 1%灵魂率
-        return spirit / 100;
+        return this.calculateAttributeRateWithDiminishing(spirit);
     }
     
     updateStats() {
         const stats = this.calculateStats();
+        
+        // 保存详细属性信息到实例变量，供工具提示使用
+        this.currentAttributeDetails = stats.attributeDetails || {};
+        // 保存最终百分比值
+        this.currentFinalValues = {
+            critRate: stats.critRatePercent || 0,
+            mastery: stats.masteryRatePercent || 0,
+            haste: stats.hasteRatePercent || 0,
+            spirit: stats.spiritRatePercent || 0
+        };
         
         // 更新显示
         // 一级
@@ -1076,14 +1302,17 @@ class BuildSimulator {
         // 二级
         document.getElementById('stamina').textContent = stats.stamina || 0;
         document.getElementById('intellect').textContent = stats.intellect || 0;
-        // 三级（按数字展示，不加百分号）
-        document.getElementById('crit').textContent = (stats.critRate || 0).toFixed(0);
-        document.getElementById('mastery').textContent = (stats.mastery || 0).toFixed(0);
-        document.getElementById('haste').textContent = (stats.haste || 0).toFixed(0);
-        document.getElementById('spirit').textContent = stats.spirit || 0;
+        // 三级（显示为百分比，使用计算后的派生属性）
+        document.getElementById('crit').textContent = (stats.critRatePercent || 0).toFixed(2) + '%';
+        document.getElementById('mastery').textContent = (stats.masteryRatePercent || 0).toFixed(2) + '%';
+        document.getElementById('haste').textContent = (stats.hasteRatePercent || 0).toFixed(2) + '%';
+        document.getElementById('spirit').textContent = (stats.spiritRatePercent || 0).toFixed(2) + '%';
         // 四级
         document.getElementById('dodge').textContent = (stats.dodge || 0).toFixed(1) + '%';
         document.getElementById('moveSpeed').textContent = (stats.moveSpeed || 0).toFixed(1) + '%';
+        
+        // 设置属性项的悬停事件
+        this.setupAttributeTooltips();
         
         // 更新武器技能词条
         this.updateWeaponSkill();
@@ -1095,6 +1324,140 @@ class BuildSimulator {
         this.updateSetBonus();
         // 更新宝石技能
         this.updateGemSkills();
+    }
+    
+    /**
+     * 设置属性项的悬停提示
+     */
+    setupAttributeTooltips() {
+        const statItems = document.querySelectorAll('.stat-item[data-stat]');
+        const tooltip = document.getElementById('statTooltip');
+        
+        // 属性名称和描述映射
+        const attributeInfo = {
+            crit: { name: '暴击', description: '暴击率影响你的攻击造成暴击的几率。暴击会造成额外的伤害。' },
+            mastery: { name: '精通', description: '精通率影响你的技能效果和伤害加成。' },
+            haste: { name: '急速', description: '急速率影响你的攻击速度和技能冷却时间。' },
+            spirit: { name: '灵魂', description: '灵魂率影响你的能量恢复和特殊效果触发。' }
+        };
+        
+        statItems.forEach(item => {
+            const statType = item.getAttribute('data-stat');
+            const info = attributeInfo[statType];
+            
+            if (!info) return;
+            
+            // 移除旧的事件监听器
+            const newItem = item.cloneNode(true);
+            item.parentNode.replaceChild(newItem, item);
+            
+            newItem.addEventListener('mouseenter', (e) => {
+                const details = this.currentAttributeDetails[statType === 'crit' ? 'critRate' : statType];
+                if (details) {
+                    this.showAttributeTooltip(e, statType, info, details);
+                }
+            });
+            
+            newItem.addEventListener('mouseleave', () => {
+                this.hideAttributeTooltip();
+            });
+            
+            newItem.addEventListener('mousemove', (e) => {
+                if (tooltip && !tooltip.classList.contains('hidden')) {
+                    this.updateTooltipPosition(e, tooltip);
+                }
+            });
+        });
+    }
+    
+    /**
+     * 显示属性工具提示
+     */
+    showAttributeTooltip(event, statType, info, details) {
+        const tooltip = document.getElementById('statTooltip');
+        if (!tooltip) return;
+        
+        // 获取最终值（从保存的值中获取）
+        const statKey = statType === 'crit' ? 'critRate' : statType;
+        const finalValue = this.currentFinalValues ? (this.currentFinalValues[statKey] || 0) : 0;
+        
+        // 设置标题和描述
+        tooltip.querySelector('.tooltip-title').textContent = info.name;
+        tooltip.querySelector('.tooltip-description').textContent = info.description;
+        
+        // 设置详细数值
+        document.getElementById('tooltip-base-value').textContent = Math.round(details.baseValue || 0);
+        const totalPercentBonus = (details.percentMultiplier || 0) + (details.percentBonus || 0);
+        document.getElementById('tooltip-percent-multiplier').textContent = 
+            totalPercentBonus > 0 ? `+${totalPercentBonus.toFixed(2)}%` : '无';
+        document.getElementById('tooltip-final-value').textContent = finalValue.toFixed(2) + '%';
+        
+        // 设置加成来源
+        const sourcesList = document.getElementById('tooltip-sources');
+        sourcesList.innerHTML = '';
+        
+        if (details.sources && details.sources.length > 0) {
+            details.sources.forEach(source => {
+                const sourceItem = document.createElement('div');
+                sourceItem.className = 'tooltip-source-item';
+                let typeText = '套装效果';
+                if (source.type === 'gem') {
+                    typeText = '宝石技能';
+                } else if (source.type === 'hero') {
+                    typeText = '英雄';
+                }
+                sourceItem.innerHTML = `
+                    <span class="tooltip-source-type">${typeText}</span>
+                    <span class="tooltip-source-name">${source.name}</span>
+                    <span class="tooltip-source-value">${source.value}</span>
+                `;
+                sourcesList.appendChild(sourceItem);
+            });
+        } else {
+            sourcesList.innerHTML = '<div class="tooltip-source-item">无加成来源</div>';
+        }
+        
+        // 显示工具提示并更新位置
+        tooltip.classList.remove('hidden');
+        this.updateTooltipPosition(event, tooltip);
+    }
+    
+    /**
+     * 隐藏属性工具提示
+     */
+    hideAttributeTooltip() {
+        const tooltip = document.getElementById('statTooltip');
+        if (tooltip) {
+            tooltip.classList.add('hidden');
+        }
+    }
+    
+    /**
+     * 更新工具提示位置
+     */
+    updateTooltipPosition(event, tooltip) {
+        const mouseX = event.clientX;
+        const mouseY = event.clientY;
+        const tooltipWidth = tooltip.offsetWidth;
+        const tooltipHeight = tooltip.offsetHeight;
+        const windowWidth = window.innerWidth;
+        const windowHeight = window.innerHeight;
+        
+        let left = mouseX + 15;
+        let top = mouseY + 15;
+        
+        // 防止超出右边界
+        if (left + tooltipWidth > windowWidth) {
+            left = mouseX - tooltipWidth - 15;
+        }
+        
+        // 防止超出下边界
+        if (top + tooltipHeight > windowHeight) {
+            top = mouseY - tooltipHeight - 15;
+        }
+        
+        tooltip.style.left = left + 'px';
+        tooltip.style.top = top + 'px';
     }
     
     updateGemSkills() {
@@ -1137,41 +1500,51 @@ class BuildSimulator {
             
             // 动态计算tooltip位置，避免超出边界
             const updateTooltipPosition = () => {
-                const rect = skillIcon.getBoundingClientRect();
+                const iconRect = skillIcon.getBoundingClientRect();
                 const containerRect = container.getBoundingClientRect();
                 const tooltipWidth = 280;
                 const tooltipHalfWidth = tooltipWidth / 2;
                 
-                // 计算图标中心相对于容器的位置
-                const iconCenterX = rect.left - containerRect.left + rect.width / 2;
+                // 计算图标中心相对于容器的位置（用于判断是否超出边界）
+                const iconCenterXInContainer = iconRect.left - containerRect.left + iconRect.width / 2;
                 
                 // 计算tooltip相对于图标的位置（图标中心到tooltip左边的距离）
-                const tooltipLeftFromIcon = iconCenterX - tooltipHalfWidth;
-                const tooltipRightFromIcon = iconCenterX + tooltipHalfWidth;
+                const tooltipLeftFromIcon = iconCenterXInContainer - tooltipHalfWidth;
+                const tooltipRightFromIcon = iconCenterXInContainer + tooltipHalfWidth;
+                
+                // 图标中心相对于图标本身的位置（用于箭头定位）
+                const iconCenterXInIcon = iconRect.width / 2;
                 
                 // 如果tooltip会超出左边界
                 if (tooltipLeftFromIcon < 0) {
-                    tooltip.style.left = '0';
+                    // tooltip左边缘对齐容器左边缘
+                    // 计算tooltip左边缘相对于图标的距离
+                    const iconLeftInContainer = iconRect.left - containerRect.left;
+                    tooltip.style.left = `${-iconLeftInContainer}px`;
+                    tooltip.style.right = 'auto';
                     tooltip.style.transform = 'translateX(0) translateY(8px)';
                     // 箭头指向图标中心，从tooltip左边缘向右偏移图标中心X的距离
-                    tooltip.style.setProperty('--arrow-offset', `${iconCenterX}px`);
+                    tooltip.style.setProperty('--arrow-offset', `${iconCenterXInIcon + iconLeftInContainer}px`);
                 }
                 // 如果tooltip会超出右边界
                 else if (tooltipRightFromIcon > containerRect.width) {
+                    // tooltip右边缘对齐容器右边缘
+                    // 计算tooltip右边缘相对于图标的距离
+                    const iconRightInContainer = iconRect.right - containerRect.left;
+                    const tooltipRightOffset = iconRightInContainer - containerRect.width;
                     tooltip.style.left = 'auto';
-                    tooltip.style.right = '0';
+                    tooltip.style.right = `${tooltipRightOffset}px`;
                     tooltip.style.transform = 'translateX(0) translateY(8px)';
                     // 箭头指向图标中心，从tooltip右边缘向左计算
-                    // 图标中心到容器右边缘的距离
-                    const distanceFromRight = containerRect.width - iconCenterX;
+                    const distanceFromRight = containerRect.width - iconCenterXInContainer;
                     tooltip.style.setProperty('--arrow-offset', `calc(100% - ${distanceFromRight}px)`);
                 }
                 // 正常居中显示
                 else {
                     // 使用图标中心作为tooltip的中心点
-                    const tooltipLeft = iconCenterX - tooltipHalfWidth;
-                    tooltip.style.left = `${tooltipLeft}px`;
-                    tooltip.style.transform = 'translateY(8px)';
+                    tooltip.style.left = '50%';
+                    tooltip.style.right = 'auto';
+                    tooltip.style.transform = 'translateX(-50%) translateY(8px)';
                     // 箭头在tooltip的正中央，指向图标中心
                     tooltip.style.setProperty('--arrow-offset', '50%');
                 }
@@ -1183,6 +1556,13 @@ class BuildSimulator {
                 setTimeout(() => {
                     updateTooltipPosition();
                 }, 0);
+            });
+            
+            // 窗口大小改变时重新计算位置
+            window.addEventListener('resize', () => {
+                if (skillIcon.matches(':hover')) {
+                    updateTooltipPosition();
+                }
             });
             
             const tooltipHeader = document.createElement('div');
@@ -1355,6 +1735,10 @@ class BuildSimulator {
                     this.setButtonIcon(btn, equip.icon, slotId);
                 }
                 btn.title = equip ? `${equip.name}` : `${btn.getAttribute('data-label')}`;
+                // 设置装备边框样式
+                if (equip) {
+                    this.setEquipmentBorder(btn, equip);
+                }
                 // 更新名称显示
                 if (nameSpan && equip) {
                     // 清空之前的内容
@@ -1575,6 +1959,46 @@ class BuildSimulator {
         container.innerHTML = html;
     }
 
+    /**
+     * 获取激活的套装效果
+     * @returns {Array} - 激活的套装效果数组，每个元素包含 { description, setId, setName }
+     */
+    getActiveSetBonuses() {
+        const activeBonuses = [];
+        const setCounts = {}; // { setId: count }
+        
+        const slots = ['head', 'shoulder', 'cloak', 'chest', 'hands', 'legs', 'feet', 'necklace', 'wrist', 'ring1', 'ring2', 'relic1', 'relic2', 'weapon'];
+        
+        // 统计每个套装的件数
+        slots.forEach(slotId => {
+            const equipment = this.getEquipmentStats(slotId);
+            if (equipment && equipment.setId) {
+                const setId = equipment.setId;
+                setCounts[setId] = (setCounts[setId] || 0) + 1;
+            }
+        });
+        
+        // 检查每个套装的激活效果
+        Object.keys(setCounts).forEach(setId => {
+            const pieces = setCounts[setId];
+            const setData = this.setsData.find(s => s.id === setId);
+            if (setData && setData.bonuses) {
+                setData.bonuses.forEach(bonus => {
+                    // 如果当前件数 >= 所需件数，则激活该效果
+                    if (pieces >= bonus.requiredPieces) {
+                        activeBonuses.push({
+                            description: bonus.description,
+                            setId: setId,
+                            setName: setData.name
+                        });
+                    }
+                });
+            }
+        });
+        
+        return activeBonuses;
+    }
+
     updateSetBonus() {
         const container = document.getElementById('setBonus');
         if (!container) return;
@@ -1761,7 +2185,11 @@ class BuildSimulator {
         const modal = document.getElementById('pickerModal');
         const title = document.getElementById('pickerTitle');
         const list = document.getElementById('pickerList');
+        const filterSelect = document.getElementById('pickerFilter');
         if (!modal || !title || !list) return;
+
+        // 存储当前槽位ID，用于筛选时使用
+        this.currentPickerSlotId = slotId;
 
         const labelMap = {
             head: '头部', shoulder: '肩部', cloak: '披风', chest: '胸部',
@@ -1771,6 +2199,140 @@ class BuildSimulator {
         };
 
         title.textContent = `选择 ${labelMap[slotId] || slotId}`;
+        
+        // 如果是遗物或武器，隐藏筛选下拉框；否则显示
+        if (filterSelect) {
+            const filterContainer = filterSelect.closest('.picker-filter-container');
+            if (slotId === 'relic1' || slotId === 'relic2' || slotId === 'weapon') {
+                if (filterContainer) filterContainer.style.display = 'none';
+            } else {
+                if (filterContainer) filterContainer.style.display = 'block';
+                filterSelect.value = ''; // 重置筛选
+            }
+        }
+
+        // 渲染装备列表
+        this.renderPickerItems(slotId, '');
+
+        modal.classList.remove('hidden');
+
+        // 关闭事件
+        const closeBtn = document.getElementById('pickerClose');
+        closeBtn.onclick = () => this.closeEquipmentPicker();
+        modal.onclick = (e) => { if (e.target === modal) this.closeEquipmentPicker(); };
+
+        // 筛选事件
+        if (filterSelect && slotId !== 'relic1' && slotId !== 'relic2' && slotId !== 'weapon') {
+            filterSelect.onchange = (e) => {
+                const filterValue = e.target.value;
+                this.renderPickerItems(slotId, filterValue);
+            };
+        }
+    }
+
+    /**
+     * 为元素设置装备边框样式
+     * @param {HTMLElement} element - 要设置边框的元素
+     * @param {Object} item - 装备对象
+     */
+    setEquipmentBorder(element, item) {
+        // 宝石颜色映射
+        const statColors = {
+            critRate: '#9b59b6',  // 紫水晶 - 暴击
+            haste: '#f39c12',     // 黄玉 - 急速
+            mastery: '#2ecc71',   // 绿宝石 - 精通
+            spirit: '#3498db'      // 蓝宝石 - 灵魂
+        };
+        
+        // 获取所有二级属性值
+        const stats = {
+            critRate: item.critRate || 0,
+            haste: item.haste || 0,
+            mastery: item.mastery || 0,
+            spirit: item.spirit || 0
+        };
+        
+        // 过滤出有值的属性并按值排序
+        const activeStats = Object.entries(stats)
+            .filter(([_, value]) => value > 0)
+            .sort((a, b) => b[1] - a[1]); // 按值降序排序
+        
+        // 清除之前的边框覆盖层
+        const existingBorder = element.querySelector('.equipment-border-overlay');
+        if (existingBorder) {
+            existingBorder.remove();
+        }
+        
+        // 如果没有二级属性，使用默认边框
+        if (activeStats.length === 0) {
+            element.style.border = '2px solid var(--border-color)';
+            element.style.borderImage = 'none';
+            return;
+        }
+        
+        // 如果只有一个属性，使用纯色边框
+        if (activeStats.length === 1) {
+            const [statName, _] = activeStats[0];
+            element.style.border = `2px solid ${statColors[statName]}`;
+            element.style.borderImage = 'none';
+            return;
+        }
+        
+        // 如果有两个或更多属性，取前两个创建渐变
+        const [firstStat, secondStat] = activeStats.slice(0, 2);
+        const [firstStatName, firstValue] = firstStat;
+        const [secondStatName, secondValue] = secondStat;
+        
+        const total = firstValue + secondValue;
+        const firstPercent = Math.round((firstValue / total) * 100);
+        
+        // 使用圆锥渐变（conic-gradient）创建圆形边框效果
+        // 从第一个颜色开始，按比例分配
+        const firstColor = statColors[firstStatName];
+        const secondColor = statColors[secondStatName];
+        
+        // 计算角度（360度 * 百分比）
+        const firstAngle = (firstPercent / 100) * 360;
+        
+        // 创建圆锥渐变
+        const gradient = `conic-gradient(from 0deg, ${firstColor} 0deg ${firstAngle}deg, ${secondColor} ${firstAngle}deg 360deg)`;
+        
+        // 确保元素是相对定位
+        if (getComputedStyle(element).position === 'static') {
+            element.style.position = 'relative';
+        }
+        
+        // 创建边框覆盖层（使用mask技术，只显示边框部分）
+        const borderOverlay = document.createElement('div');
+        borderOverlay.className = 'equipment-border-overlay';
+        borderOverlay.style.position = 'absolute';
+        borderOverlay.style.inset = '-2px';
+        borderOverlay.style.borderRadius = 'inherit';
+        borderOverlay.style.background = gradient;
+        borderOverlay.style.pointerEvents = 'none';
+        borderOverlay.style.zIndex = '0';
+        
+        // 使用mask创建边框效果：只显示2px的边框，内部透明
+        // 使用content-box和padding-box来创建边框效果
+        borderOverlay.style.mask = 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)';
+        borderOverlay.style.webkitMask = 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)';
+        borderOverlay.style.maskComposite = 'exclude';
+        borderOverlay.style.webkitMaskComposite = 'xor';
+        borderOverlay.style.padding = '2px';
+        
+        // 将边框覆盖层插入到元素的最前面（作为第一个子元素），这样不会遮挡后续内容
+        if (element.firstChild) {
+            element.insertBefore(borderOverlay, element.firstChild);
+        } else {
+            element.appendChild(borderOverlay);
+        }
+    }
+
+    // 渲染装备列表
+    renderPickerItems(slotId, filterStat) {
+        const list = document.getElementById('pickerList');
+        if (!list) return;
+
         list.innerHTML = '';
 
         // 分类名称
@@ -1826,6 +2388,14 @@ class BuildSimulator {
             });
         }
 
+        // 应用属性筛选（遗物和武器不应用）
+        if (filterStat && slotId !== 'relic1' && slotId !== 'relic2' && slotId !== 'weapon') {
+            items = items.filter(item => {
+                // 检查装备是否有该属性且属性值大于0
+                return item[filterStat] !== undefined && item[filterStat] > 0;
+            });
+        }
+
         items.forEach(item => {
             const row = document.createElement('div');
             row.className = 'picker-item';
@@ -1862,6 +2432,8 @@ class BuildSimulator {
             const icon = document.createElement('div');
             icon.className = 'picker-item-icon';
             if (item.icon) icon.style.backgroundImage = `url(${item.icon})`;
+            // 为图标设置装备边框样式
+            this.setEquipmentBorder(icon, item);
 
             const meta = document.createElement('div');
             const name = document.createElement('div');
@@ -1880,13 +2452,6 @@ class BuildSimulator {
             row.appendChild(meta);
             list.appendChild(row);
         });
-
-        modal.classList.remove('hidden');
-
-        // 关闭事件
-        const closeBtn = document.getElementById('pickerClose');
-        closeBtn.onclick = () => this.closeEquipmentPicker();
-        modal.onclick = (e) => { if (e.target === modal) this.closeEquipmentPicker(); };
     }
 
     closeEquipmentPicker() {
@@ -2230,7 +2795,7 @@ class BuildSimulator {
                 statsDiv.className = 'equipment-item-stats';
                 const statTexts = [];
                 Object.keys(equipment).forEach(key => {
-                    if (key !== 'id' && key !== 'name' && equipment[key] !== undefined) {
+                    if (key !== 'id' && key !== 'name' && key !== 'dropLocation' && equipment[key] !== undefined) {
                         const value = equipment[key];
                         let displayValue = value;
                         if (key === 'critRate' || key === 'critDamage' || key === 'cooldown') {

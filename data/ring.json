@@ -1,8 +1,186 @@
 [
-    { "id": "ring_power", "name": "力量之戒", "icon": "DEFAULT", "attack": 30, "critRate": 5 },
-    { "id": "ring_defense", "name": "防御之戒", "icon": "DEFAULT", "defense": 25, "health": 50 },
-    { "id": "ring_magic", "name": "魔法之戒", "icon": "DEFAULT", "mana": 40, "cooldown": 10 },
-    { "id": "ring_crit", "name": "暴击之戒", "icon": "DEFAULT", "critRate": 10, "critDamage": 20 },
-    { "id": "ring_balanced", "name": "平衡之戒", "icon": "DEFAULT", "attack": 20, "defense": 20, "health": 40, "mana": 25 }
+    {
+        "id": "3422",
+        "name": "冰雹指环",
+        "icon": "assets/icons/ring/3422.png",
+        "itemLevel": 330,
+        "stamina": 119,
+        "haste": 227,
+        "spirit": 40,
+        "heroes": ["silvia"],
+        "dropLocation": "妖龙之心"
+    },
+    {
+        "id": "3537",
+        "name": "卡尔德之子印戒",
+        "icon": "assets/icons/ring/3537.png",
+        "itemLevel": 330,
+        "stamina": 119,
+        "haste": 40,
+        "spirit": 227,
+        "heroes": ["silvia"],
+        "dropLocation": "德拉海姆之劫"
+    },
+    {
+        "id": "3517",
+        "name": "叶网印记",
+        "icon": "assets/icons/ring/3517.png",
+        "itemLevel": 330,
+        "stamina": 119,
+        "mastery": 80,
+        "spirit": 187,
+        "heroes": ["silvia"],
+        "dropLocation": "盘丝幽谷"
+    },
+    {
+        "id": "3509",
+        "name": "寒霜收集者冰环",
+        "icon": "assets/icons/ring/3509.png",
+        "itemLevel": 330,
+        "stamina": 119,
+        "haste": 40,
+        "spirit": 227,
+        "setId": "song_of_suffering",
+        "heroes": ["silvia"],
+        "noSocket": true,
+        "dropLocation": "盘丝幽谷"
+    },
+    {
+        "id": "3402",
+        "name": "憎恶指环",
+        "icon": "assets/icons/ring/3402.png",
+        "itemLevel": 330,
+        "stamina": 119,
+        "haste": 187,
+        "mastery": 80,
+        "heroes": ["silvia"],
+        "dropLocation": "图萨瑞之心"
+    },
+    {
+        "id": "3439",
+        "name": "斥候之环",
+        "icon": "assets/icons/ring/3439.png",
+        "itemLevel": 330,
+        "stamina": 119,
+        "critRate": 147,
+        "spirit": 120,
+        "heroes": ["silvia"],
+        "dropLocation": "永曦林地"
+    },
+    {
+        "id": "3522",
+        "name": "淡水珍珠戒指",
+        "icon": "assets/icons/ring/3522.png",
+        "itemLevel": 330,
+        "stamina": 119,
+        "haste": 40,
+        "mastery": 227,
+        "heroes": ["silvia"],
+        "dropLocation": "水手深渊"
+    },
+    {
+        "id": "3528",
+        "name": "烙印印戒",
+        "icon": "assets/icons/ring/3528.png",
+        "itemLevel": 330,
+        "stamina": 119,
+        "critRate": 120,
+        "haste": 147,
+        "heroes": ["silvia"],
+        "dropLocation": "乌拉克集市"
+    },
+    {
+        "id": "3493",
+        "name": "狱主圆环",
+        "icon": "assets/icons/ring/3493.png",
+        "itemLevel": 330,
+        "stamina": 119,
+        "haste": 80,
+        "mastery": 187,
+        "setId": "tusare_agility",
+        "heroes": ["silvia"],
+        "noSocket": true,
+        "dropLocation": "乌拉克集市"
+    },
+    {
+        "id": "3394",
+        "name": "碎裂的石英印戒",
+        "icon": "assets/icons/ring/3394.png",
+        "itemLevel": 330,
+        "stamina": 119,
+        "critRate": 187,
+        "mastery": 80,
+        "heroes": ["silvia"],
+        "dropLocation": "炽天沙原"
+    },
+    {
+        "id": "3501",
+        "name": "缚藏之环",
+        "icon": "assets/icons/ring/3501.png",
+        "itemLevel": 330,
+        "stamina": 119,
+        "critRate": 147,
+        "haste": 120,
+        "setId": "sin_protection",
+        "heroes": ["silvia"],
+        "noSocket": true,
+        "dropLocation": "水手深渊"
+    },
+    {
+        "id": "3416",
+        "name": "紫罗兰之火的宝石指环",
+        "icon": "assets/icons/ring/3416.png",
+        "itemLevel": 330,
+        "stamina": 119,
+        "critRate": 120,
+        "haste": 147,
+        "heroes": ["silvia"],
+        "dropLocation": "塞瑟瑞尔的覆灭"
+    },
+    {
+        "id": "3409",
+        "name": "神陨印记",
+        "icon": "assets/icons/ring/3409.png",
+        "itemLevel": 330,
+        "stamina": 119,
+        "critRate": 80,
+        "mastery": 187,
+        "heroes": ["silvia"],
+        "dropLocation": "神陨矿场"
+    },
+    {
+        "id": "3468",
+        "name": "蚀刻森林指环",
+        "icon": "assets/icons/ring/3468.png",
+        "itemLevel": 330,
+        "stamina": 119,
+        "haste": 40,
+        "mastery": 227,
+        "heroes": ["silvia"],
+        "dropLocation": "风暴瞭望"
+    },
+    {
+        "id": "3485",
+        "name": "铸鳞爪环",
+        "icon": "assets/icons/ring/3485.png",
+        "itemLevel": 330,
+        "stamina": 119,
+        "critRate": 80,
+        "spirit": 187,
+        "setId": "eldin_deception",
+        "heroes": ["silvia"],
+        "noSocket": true,
+        "dropLocation": "妖龙之心"
+    },
+    {
+        "id": "3477",
+        "name": "鲨齿指环",
+        "icon": "assets/icons/ring/3477.png",
+        "itemLevel": 330,
+        "stamina": 119,
+        "mastery": 147,
+        "spirit": 120,
+        "heroes": ["silvia"],
+        "dropLocation": "鬼潮墓穴"
+    }
 ]
-

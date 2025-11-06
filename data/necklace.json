@@ -1,9 +1,4 @@
 [
-    { "id": "necklace_life", "name": "生命项链", "icon": "DEFAULT", "health": 100, "defense": 20 },
-    { "id": "necklace_mana", "name": "魔法项链", "icon": "DEFAULT", "mana": 60, "cooldown": 8 },
-    { "id": "necklace_speed", "name": "速度项链", "icon": "DEFAULT", "moveSpeed": 15, "critRate": 5 },
-    { "id": "necklace_power", "name": "力量项链", "icon": "DEFAULT", "attack": 40, "critRate": 8 },
-    { "id": "necklace_legend", "name": "传说项链", "icon": "DEFAULT", "attack": 30, "defense": 30, "health": 80, "mana": 50 },
     {
         "id": "3431",
         "name": "不屈绽放护身符",
@@ -15,7 +10,8 @@
         "heroes": ["silvia"],
         "rarity": "legendary",
         "legendaryEffectName": "不屈绽放",
-        "legendaryEffectDesc": "绽放心花对玩家造成的过量治疗的 75% 会转化为护盾,至多持续 15 秒。\n\n由不屈绽放产生的护盾至多可吸收相当于 1232% 智力的伤害。"
+        "legendaryEffectDesc": "绽放心花对玩家造成的过量治疗的 75% 会转化为护盾,至多持续 15 秒。\n\n由不屈绽放产生的护盾至多可吸收相当于 1232% 智力的伤害。",
+        "dropLocation": "所有地点"
     },
     {
         "id": "3492",
@@ -27,7 +23,146 @@
         "spirit": 397,
         "setId": "dark_prophecy",
         "heroes": ["silvia"],
-        "noSocket": true
+        "noSocket": true,
+        "dropLocation": "所有地点"
+    },
+    {
+        "id": "3415",
+        "name": "元素守护者的锁链",
+        "icon": "assets/icons/necklace/3415.png",
+        "itemLevel": 330,
+        "stamina": 208,
+        "haste": 140,
+        "spirit": 327,
+        "heroes": ["silvia"],
+        "dropLocation": "塞瑟瑞尔的覆灭"
+    },
+    {
+        "id": "3467",
+        "name": "雷霆护符",
+        "icon": "assets/icons/necklace/3467.png",
+        "itemLevel": 330,
+        "stamina": 208,
+        "haste": 257,
+        "mastery": 210,
+        "heroes": ["silvia"],
+        "dropLocation": "风暴瞭望"
+    },
+    {
+        "id": "3438",
+        "name": "闪亮石项链",
+        "icon": "assets/icons/necklace/3438.png",
+        "itemLevel": 330,
+        "stamina": 208,
+        "haste": 140,
+        "mastery": 327,
+        "heroes": ["silvia"],
+        "dropLocation": "永曦林地"
+    },
+    {
+        "id": "3484",
+        "name": "铸鳞项链",
+        "icon": "assets/icons/necklace/3484.png",
+        "itemLevel": 330,
+        "stamina": 208,
+        "mastery": 327,
+        "spirit": 140,
+        "setId": "dragon_power",
+        "heroes": ["silvia"],
+        "noSocket": true,
+        "dropLocation": "塞瑟瑞尔的覆灭"
+    },
+    {
+        "id": "3408",
+        "name": "金丝雀护身符",
+        "icon": "assets/icons/necklace/3408.png",
+        "itemLevel": 330,
+        "stamina": 208,
+        "critRate": 210,
+        "spirit": 257,
+        "heroes": ["silvia"],
+        "dropLocation": "神陨矿场"
+    },
+    {
+        "id": "3476",
+        "name": "蛾螺吊坠",
+        "icon": "assets/icons/necklace/3476.png",
+        "itemLevel": 330,
+        "stamina": 208,
+        "critRate": 257,
+        "haste": 210,
+        "heroes": ["silvia"],
+        "dropLocation": "鬼潮墓穴"
+    },
+    {
+        "id": "3516",
+        "name": "蛋囊护身符",
+        "icon": "assets/icons/necklace/3516.png",
+        "itemLevel": 330,
+        "stamina": 208,
+        "critRate": 397,
+        "mastery": 70,
+        "heroes": ["silvia"],
+        "dropLocation": "盘丝幽谷"
+    },
+    {
+        "id": "3401",
+        "name": "翎羽项圈",
+        "icon": "assets/icons/necklace/3401.png",
+        "itemLevel": 330,
+        "stamina": 208,
+        "critRate": 70,
+        "mastery": 397,
+        "heroes": ["silvia"],
+        "dropLocation": "图萨瑞之心"
+    },
+    {
+        "id": "3500",
+        "name": "缚藏护身符",
+        "icon": "assets/icons/necklace/3500.png",
+        "itemLevel": 330,
+        "stamina": 208,
+        "critRate": 397,
+        "mastery": 70,
+        "setId": "bel_orum_torment",
+        "heroes": ["silvia"],
+        "noSocket": true,
+        "dropLocation": "鬼潮墓穴"
+    },
+    {
+        "id": "3421",
+        "name": "粒雪吊坠",
+        "icon": "assets/icons/necklace/3421.png",
+        "itemLevel": 330,
+        "stamina": 208,
+        "critRate": 327,
+        "haste": 140,
+        "heroes": ["silvia"],
+        "dropLocation": "妖龙之心"
+    },
+    {
+        "id": "3508",
+        "name": "寒霜收集者灵魂吊坠",
+        "icon": "assets/icons/necklace/3508.png",
+        "itemLevel": 330,
+        "stamina": 208,
+        "haste": 257,
+        "mastery": 210,
+        "setId": "draheim_forgiveness",
+        "heroes": ["silvia"],
+        "noSocket": true,
+        "dropLocation": "德拉海姆之劫"
+    },
+    {
+        "id": "3536",
+        "name": "寒渊项链",
+        "icon": "assets/icons/necklace/3536.png",
+        "itemLevel": 330,
+        "stamina": 208,
+        "critRate": 327,
+        "haste": 140,
+        "heroes": ["silvia"],
+        "dropLocation": "德拉海姆之劫"
     }
 ]
 

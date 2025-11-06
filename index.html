@@ -9,7 +9,7 @@
 <body>
     <div class="container">
         <header>
-            <h1>⚔️ Fellowship 配装模拟器 V0.2</h1>
+            <h1>⚔️ Fellowship 配装模拟器 V0.3</h1>
             <div class="header-actions">
                 <button id="saveBtn" class="btn btn-primary">保存Build</button>
                 <button id="loadBtn" class="btn btn-secondary">加载Build</button>
@@ -210,22 +210,46 @@
                 <div class="stat-section">
                     <h3>次要</h3>
                     <div class="stats-grid">
-                        <div class="stat-item">
+                        <div class="stat-item" data-stat="crit">
                             <span class="stat-label">暴击</span>
                             <span class="stat-value" id="crit">0%</span>
                         </div>
-                        <div class="stat-item">
+                        <div class="stat-item" data-stat="mastery">
                             <span class="stat-label">精通</span>
                             <span class="stat-value" id="mastery">0%</span>
                         </div>
-                        <div class="stat-item">
+                        <div class="stat-item" data-stat="haste">
                             <span class="stat-label">急速</span>
                             <span class="stat-value" id="haste">0%</span>
                         </div>
-                        <div class="stat-item">
+                        <div class="stat-item" data-stat="spirit">
                             <span class="stat-label">灵魂</span>
                             <span class="stat-value" id="spirit">0</span>
                         </div>
+                    </div>
+                </div>
+                
+                <!-- 属性详情提示框 -->
+                <div id="statTooltip" class="stat-tooltip hidden">
+                    <div class="tooltip-title"></div>
+                    <div class="tooltip-description"></div>
+                    <div class="tooltip-stats">
+                        <div class="tooltip-stat-row">
+                            <span class="tooltip-stat-label">基础属性值：</span>
+                            <span class="tooltip-stat-value" id="tooltip-base-value"></span>
+                        </div>
+                        <div class="tooltip-stat-row">
+                            <span class="tooltip-stat-label">百分比加成：</span>
+                            <span class="tooltip-stat-value" id="tooltip-percent-multiplier"></span>
+                        </div>
+                        <div class="tooltip-stat-row">
+                            <span class="tooltip-stat-label">最终百分比：</span>
+                            <span class="tooltip-stat-value" id="tooltip-final-value"></span>
+                        </div>
+                    </div>
+                    <div class="tooltip-sources">
+                        <div class="tooltip-source-title">加成来源：</div>
+                        <div class="tooltip-source-list" id="tooltip-sources"></div>
                     </div>
                 </div>
 
@@ -265,6 +289,15 @@
             <div class="picker-dialog">
                 <div class="picker-header">
                     <div id="pickerTitle">选择装备</div>
+                    <div class="picker-filter-container">
+                        <select id="pickerFilter" class="picker-filter">
+                            <option value="">全部属性</option>
+                            <option value="critRate">暴击</option>
+                            <option value="mastery">精通</option>
+                            <option value="haste">急速</option>
+                            <option value="spirit">灵魂</option>
+                        </select>
+                    </div>
                     <button id="pickerClose" class="picker-close">×</button>
                 </div>
                 <div id="pickerList" class="picker-list"></div>

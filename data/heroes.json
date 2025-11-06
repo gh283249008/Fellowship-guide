@@ -9,9 +9,9 @@
             "defense": 60,
             "health": 500,
             "mana": 200,
-            "critRate": 10,
-            "critDamage": 50,
-            "moveSpeed": 10,
+            "critRate": 0,
+            "critDamage": 0,
+            "moveSpeed": 100,
             "cooldown": 0
         }
     }

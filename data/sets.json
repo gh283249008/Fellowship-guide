@@ -1,43 +1,81 @@
 [
     {
-        "id": "example_set_1",
-        "name": "示例套装1",
-        "bonuses": [
-            {
-                "requiredPieces": 2,
-                "description": "2件套装效果：所有属性 +5%"
-            },
-            {
-                "requiredPieces": 4,
-                "description": "4件套装效果：暴击率 +10%"
-            },
-            {
-                "requiredPieces": 6,
-                "description": "6件套装效果：技能伤害 +15%"
-            }
-        ]
-    },
-    {
-        "id": "example_set_2",
-        "name": "示例套装2",
-        "bonuses": [
-            {
-                "requiredPieces": 2,
-                "description": "2件套装效果：生命值 +20%"
-            },
-            {
-                "requiredPieces": 4,
-                "description": "4件套装效果：伤害减免 +10%"
-            }
-        ]
-    },
-    {
         "id": "dark_prophecy",
         "name": "黑暗预言",
         "bonuses": [
             {
                 "requiredPieces": 2,
                 "description": "你的技能有几率(每分钟触发 0.8 次)使你的急速提高25%,持续20秒。"
+            }
+        ]
+    },
+    {
+        "id": "dragon_power",
+        "name": "巨龙神力",
+        "bonuses": [
+            {
+                "requiredPieces": 2,
+                "description": "你的每次暴击有几率(每分钟触发0.9次)使你提高18%的智力,持续15秒。"
+            }
+        ]
+    },
+    {
+        "id": "bel_orum_torment",
+        "name": "贝尔奥鲁姆的折磨",
+        "bonuses": [
+            {
+                "requiredPieces": 2,
+                "description": "+4% 智力。当你的生命值低于20%时,立即恢复35%的最大生命值。该效果每180秒可触发一次。"
+            }
+        ]
+    },
+    {
+        "id": "draheim_forgiveness",
+        "name": "德拉海姆之赦免",
+        "bonuses": [
+            {
+                "requiredPieces": 2,
+                "description": "你的灵魂技能提供德拉海姆之赦免效果,提升20%的智力,持续20秒。"
+            }
+        ]
+    },
+    {
+        "id": "eldin_deception",
+        "name": "艾尔丁之诡诈",
+        "bonuses": [
+            {
+                "requiredPieces": 2,
+                "description": "暴击率+3%。产生的仇恨值-15%。"
+            }
+        ]
+    },
+    {
+        "id": "sin_protection",
+        "name": "罪恶护身",
+        "bonuses": [
+            {
+                "requiredPieces": 2,
+                "description": "+3% 精通。+5% 最大生命值。"
+            }
+        ]
+    },
+    {
+        "id": "tusare_agility",
+        "name": "图萨瑞之捷",
+        "bonuses": [
+            {
+                "requiredPieces": 2,
+                "description": "+3% 急速。+20% 移动速度。"
+            }
+        ]
+    },
+    {
+        "id": "song_of_suffering",
+        "name": "苦痛哀歌",
+        "bonuses": [
+            {
+                "requiredPieces": 2,
+                "description": "+3% 灵魂值。+15% 最大魔力值。"
             }
         ]
     }

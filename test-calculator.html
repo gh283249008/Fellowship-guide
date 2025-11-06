@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>属性计算器测试</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        .test-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .test-panel {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 6px var(--shadow);
+        }
+        
+        .test-panel h2 {
+            margin-bottom: 20px;
+            font-size: 22px;
+            color: var(--text-primary);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+        }
+        
+        .input-group {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .input-item {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+        
+        .input-item label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+        
+        .input-item input {
+            padding: 10px;
+            background: var(--bg-dark);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            color: var(--text-primary);
+            font-size: 14px;
+        }
+        
+        .input-item input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+        }
+        
+        .calculate-btn {
+            padding: 12px 24px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-bottom: 20px;
+        }
+        
+        .calculate-btn:hover {
+            background: #4f46e5;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px var(--shadow);
+        }
+        
+        .result-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-color);
+        }
+        
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            background: var(--bg-dark);
+            border-radius: 6px;
+            margin-bottom: 8px;
+        }
+        
+        .result-label {
+            color: var(--text-secondary);
+            font-weight: 600;
+        }
+        
+        .result-value {
+            color: var(--primary-color);
+            font-weight: 700;
+            font-size: 16px;
+        }
+        
+        .calculation-steps {
+            background: var(--bg-dark);
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            line-height: 1.8;
+        }
+        
+        .calculation-step {
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+        }
+        
+        .calculation-step.highlight {
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+    <div class="test-container">
+        <div class="test-panel">
+            <h2>属性计算器测试</h2>
+            
+            <div class="input-group">
+                <div class="input-item">
+                    <label>基础暴击属性值</label>
+                    <input type="number" id="baseCritRate" value="1000" step="1">
+                </div>
+                <div class="input-item">
+                    <label>基础精通属性值</label>
+                    <input type="number" id="baseMastery" value="800" step="1">
+                </div>
+                <div class="input-item">
+                    <label>基础急速属性值</label>
+                    <input type="number" id="baseHaste" value="600" step="1">
+                </div>
+                <div class="input-item">
+                    <label>基础灵魂属性值</label>
+                    <input type="number" id="baseSpirit" value="400" step="1">
+                </div>
+            </div>
+            
+            <h3 style="margin-top: 20px; margin-bottom: 15px; color: var(--text-primary);">百分比加成</h3>
+            <div class="input-group">
+                <div class="input-item">
+                    <label>暴击百分比加成（加算）</label>
+                    <input type="number" id="critPercentBonus" value="0" step="0.01">
+                </div>
+                <div class="input-item">
+                    <label>精通百分比加成（加算）</label>
+                    <input type="number" id="masteryPercentBonus" value="0" step="0.01">
+                </div>
+                <div class="input-item">
+                    <label>急速百分比加成（加算）</label>
+                    <input type="number" id="hastePercentBonus" value="0" step="0.01">
+                </div>
+                <div class="input-item">
+                    <label>灵魂百分比加成（加算）</label>
+                    <input type="number" id="spiritPercentBonus" value="0" step="0.01">
+                </div>
+            </div>
+            
+            <button class="calculate-btn" onclick="calculateStats()">计算属性</button>
+            
+            <div class="result-section">
+                <h3 style="margin-bottom: 15px; color: var(--text-primary);">计算结果</h3>
+                <div id="results"></div>
+                <div id="calculationSteps" class="calculation-steps" style="display: none;"></div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        /**
+         * 计算带递减系数的属性百分比
+         * @returns {Object} 包含结果和详细步骤
+         */
+        function calculateAttributeRateWithDiminishing(attributeValue) {
+            // 基础转换：1点属性 = 0.017%
+            const baseRate = attributeValue * 0.017;
+            
+            const steps = [];
+            steps.push(`基础转换: ${attributeValue} × 0.017 = ${baseRate.toFixed(2)}%`);
+            
+            if (baseRate <= 10) {
+                steps.push(`基础率 ≤ 10%，无递减，最终: ${baseRate.toFixed(2)}%`);
+                return { result: baseRate, steps: steps };
+            }
+            
+            let result = 10; // 0-10%部分，无折扣
+            steps.push(`0-10%部分: 10% (无折扣)`);
+            
+            if (baseRate > 10) {
+                const range10_15 = Math.min(baseRate, 15) - 10;
+                const range10_15Value = range10_15 * 0.95;
+                result += range10_15Value;
+                steps.push(`10-15%部分: ${range10_15.toFixed(2)}% × 95% = ${range10_15Value.toFixed(2)}%`);
+            }
+            
+            if (baseRate > 15) {
+                const range15_20 = Math.min(baseRate, 20) - 15;
+                const range15_20Value = range15_20 * 0.90;
+                result += range15_20Value;
+                steps.push(`15-20%部分: ${range15_20.toFixed(2)}% × 90% = ${range15_20Value.toFixed(2)}%`);
+            }
+            
+            if (baseRate > 20) {
+                const range20_25 = Math.min(baseRate, 25) - 20;
+                const range20_25Value = range20_25 * 0.85;
+                result += range20_25Value;
+                steps.push(`20-25%部分: ${range20_25.toFixed(2)}% × 85% = ${range20_25Value.toFixed(2)}%`);
+            }
+            
+            if (baseRate > 25) {
+                const range25Plus = baseRate - 25;
+                const range25PlusValue = range25Plus * 0.80;
+                result += range25PlusValue;
+                steps.push(`25%以上部分: ${range25Plus.toFixed(2)}% × 80% = ${range25PlusValue.toFixed(2)}%`);
+            }
+            
+            steps.push(`合计: ${result.toFixed(2)}%`);
+            
+            return { result: result, steps: steps };
+        }
+        
+        function calculateStats() {
+            // 获取输入值
+            const baseCritRate = parseFloat(document.getElementById('baseCritRate').value) || 0;
+            const baseMastery = parseFloat(document.getElementById('baseMastery').value) || 0;
+            const baseHaste = parseFloat(document.getElementById('baseHaste').value) || 0;
+            const baseSpirit = parseFloat(document.getElementById('baseSpirit').value) || 0;
+            
+            const critPercentBonus = parseFloat(document.getElementById('critPercentBonus').value) || 0;
+            const masteryPercentBonus = parseFloat(document.getElementById('masteryPercentBonus').value) || 0;
+            const hastePercentBonus = parseFloat(document.getElementById('hastePercentBonus').value) || 0;
+            const spiritPercentBonus = parseFloat(document.getElementById('spiritPercentBonus').value) || 0;
+            
+            // 步骤1：应用递减系数
+            const critCalc = calculateAttributeRateWithDiminishing(baseCritRate);
+            const masteryCalc = calculateAttributeRateWithDiminishing(baseMastery);
+            const hasteCalc = calculateAttributeRateWithDiminishing(baseHaste);
+            const spiritCalc = calculateAttributeRateWithDiminishing(baseSpirit);
+            
+            const critRateAfterDiminish = critCalc.result;
+            const masteryRateAfterDiminish = masteryCalc.result;
+            const hasteRateAfterDiminish = hasteCalc.result;
+            const spiritRateAfterDiminish = spiritCalc.result;
+            
+            // 步骤2：应用百分比加成（加算）
+            const finalCritRate = critRateAfterDiminish + critPercentBonus;
+            const finalMastery = masteryRateAfterDiminish + masteryPercentBonus;
+            const finalHaste = hasteRateAfterDiminish + hastePercentBonus;
+            const finalSpirit = spiritRateAfterDiminish + spiritPercentBonus;
+            
+            // 显示结果
+            const resultsDiv = document.getElementById('results');
+            const stepsDiv = document.getElementById('calculationSteps');
+            
+            resultsDiv.innerHTML = `
+                <div class="result-item">
+                    <span class="result-label">暴击率</span>
+                    <span class="result-value">${finalCritRate.toFixed(2)}%</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">精通率</span>
+                    <span class="result-value">${finalMastery.toFixed(2)}%</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">急速率</span>
+                    <span class="result-value">${finalHaste.toFixed(2)}%</span>
+                </div>
+                <div class="result-item">
+                    <span class="result-label">灵魂率</span>
+                    <span class="result-value">${finalSpirit.toFixed(2)}%</span>
+                </div>
+            `;
+            
+            // 显示计算步骤
+            stepsDiv.style.display = 'block';
+            stepsDiv.innerHTML = `
+                <div style="color: var(--primary-color); font-weight: 600; margin-bottom: 10px;">暴击计算：</div>
+                <div class="calculation-step">基础属性值: ${baseCritRate}</div>
+                ${critCalc.steps.map(step => `<div class="calculation-step">${step}</div>`).join('')}
+                <div class="calculation-step">百分比加成: ${critPercentBonus > 0 ? '+' + critPercentBonus.toFixed(2) : '0'}%</div>
+                <div class="calculation-step highlight">最终暴击率: ${finalCritRate.toFixed(2)}%</div>
+                
+                <div style="color: var(--primary-color); font-weight: 600; margin-top: 15px; margin-bottom: 10px;">精通计算：</div>
+                <div class="calculation-step">基础属性值: ${baseMastery}</div>
+                ${masteryCalc.steps.map(step => `<div class="calculation-step">${step}</div>`).join('')}
+                <div class="calculation-step">百分比加成: ${masteryPercentBonus > 0 ? '+' + masteryPercentBonus.toFixed(2) : '0'}%</div>
+                <div class="calculation-step highlight">最终精通率: ${finalMastery.toFixed(2)}%</div>
+                
+                <div style="color: var(--primary-color); font-weight: 600; margin-top: 15px; margin-bottom: 10px;">急速计算：</div>
+                <div class="calculation-step">基础属性值: ${baseHaste}</div>
+                ${hasteCalc.steps.map(step => `<div class="calculation-step">${step}</div>`).join('')}
+                <div class="calculation-step">百分比加成: ${hastePercentBonus > 0 ? '+' + hastePercentBonus.toFixed(2) : '0'}%</div>
+                <div class="calculation-step highlight">最终急速率: ${finalHaste.toFixed(2)}%</div>
+                
+                <div style="color: var(--primary-color); font-weight: 600; margin-top: 15px; margin-bottom: 10px;">灵魂计算：</div>
+                <div class="calculation-step">基础属性值: ${baseSpirit}</div>
+                ${spiritCalc.steps.map(step => `<div class="calculation-step">${step}</div>`).join('')}
+                <div class="calculation-step">百分比加成: ${spiritPercentBonus > 0 ? '+' + spiritPercentBonus.toFixed(2) : '0'}%</div>
+                <div class="calculation-step highlight">最终灵魂率: ${finalSpirit.toFixed(2)}%</div>
+            `;
+        }
+        
+        // 页面加载时自动计算一次
+        window.addEventListener('DOMContentLoaded', () => {
+            calculateStats();
+        });
+    </script>
+</body>
+</html>
+

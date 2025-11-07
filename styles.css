@@ -412,6 +412,22 @@ header h1 {
     color: var(--text-primary);
     overflow: hidden;
     text-overflow: ellipsis;
+}
+
+.equipment-name-text.legendary {
+    color: #ff8c00; /* 橙色 */
+}
+
+.equipment-name-text.set-item {
+    color: #10b981; /* 绿色 */
+}
+
+.picker-item-name.legendary {
+    color: #ff8c00; /* 橙色 */
+}
+
+.picker-item-name.set-item {
+    color: #10b981; /* 绿色 */
     white-space: nowrap;
     width: 100%;
 }
@@ -791,6 +807,14 @@ header h1 {
     font-weight: 600;
     color: var(--text-primary);
     margin-bottom: 5px;
+}
+
+.equipment-item-name.legendary {
+    color: #ff8c00; /* 橙色 */
+}
+
+.equipment-item-name.set-item {
+    color: #10b981; /* 绿色 */
 }
 
 .equipment-item-stats {

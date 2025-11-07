@@ -364,10 +364,7 @@ class BuildSimulator {
             dodge: 0,            // 闪避 %
             moveSpeed: 0,        // 移速 %
             // 其他保留
-            attack: 0,
-            critDamage: 0,
-            mana: 0,
-            cooldown: 0
+            mana: 0
         };
         
         // 用于跟踪正在进行的图标加载操作
@@ -556,10 +553,7 @@ class BuildSimulator {
                 dodge: 0,
                 moveSpeed: 0,
                 // 其他保留
-                attack: 0,
-                critDamage: 0,
-                mana: 0,
-                cooldown: 0
+                mana: 0
             };
             const heroInfo = document.getElementById('heroInfo');
             const heroAvatar = document.getElementById('heroAvatar');
@@ -625,12 +619,6 @@ class BuildSimulator {
         contentDiv.innerHTML = `
             <div class="hero-name">${hero.name}</div>
             <div class="hero-description">${hero.description}</div>
-            <div class="hero-base-stats">
-                <div class="base-stat-item">基础攻击: ${hero.baseStats.attack}</div>
-                <div class="base-stat-item">基础防御: ${hero.baseStats.defense}</div>
-                <div class="base-stat-item">基础生命: ${hero.baseStats.health}</div>
-                <div class="base-stat-item">基础魔法: ${hero.baseStats.mana}</div>
-            </div>
         `;
         
         // 清空并重新填充（保留头像元素）
@@ -1173,6 +1161,13 @@ class BuildSimulator {
             stats.intellect = (stats.intellect || 0) * (1 + totalIntellectPercent / 100);
         }
         
+        // 根据耐力计算额外生命值（1耐力 = 39.978额外生命值）
+        // 在应用完所有百分比加成后计算，使用最终的耐力值
+        const finalStamina = stats.stamina || 0;
+        const staminaHealthBonus = finalStamina * 39.978;
+        // 确保health有初始值，然后加上额外生命值
+        stats.health = (stats.health || 0) + staminaHealthBonus;
+        
         return stats;
     }
     
@@ -1295,8 +1290,8 @@ class BuildSimulator {
         
         // 更新显示
         // 一级
-        document.getElementById('health').textContent = stats.health;
-        document.getElementById('armor').textContent = stats.defense;
+        document.getElementById('health').textContent = Math.round(stats.health || 0);
+        document.getElementById('armor').textContent = stats.defense || 0;
         document.getElementById('physicalDR').textContent = (stats.physicalDR || 0).toFixed(1) + '%';
         document.getElementById('magicDR').textContent = (stats.magicDR || 0).toFixed(1) + '%';
         // 二级
@@ -1335,10 +1330,10 @@ class BuildSimulator {
         
         // 属性名称和描述映射
         const attributeInfo = {
-            crit: { name: '暴击', description: '暴击率影响你的攻击造成暴击的几率。暴击会造成额外的伤害。' },
-            mastery: { name: '精通', description: '精通率影响你的技能效果和伤害加成。' },
-            haste: { name: '急速', description: '急速率影响你的攻击速度和技能冷却时间。' },
-            spirit: { name: '灵魂', description: '灵魂率影响你的能量恢复和特殊效果触发。' }
+            crit: { name: '暴击', description: '提高你的伤害和治疗效果触发暴击（效果翻倍）的概率。' },
+            mastery: { name: '精通', description: '提升你造成的所有伤害，治疗和护盾效果。' },
+            haste: { name: '急速', description: '提升你的攻击速度，施法速度以及你的持续伤害和持续治疗效果的速率。' },
+            spirit: { name: '灵魂', description: '提升所有灵魂值的获取效率，加速灵魂技能的充能。' }
         };
         
         statItems.forEach(item => {
@@ -1748,6 +1743,12 @@ class BuildSimulator {
                     const nameText = document.createElement('div');
                     nameText.textContent = equip.name;
                     nameText.className = 'equipment-name-text';
+                    // 根据装备类型添加颜色样式
+                    if (equip.rarity === 'legendary') {
+                        nameText.classList.add('legendary');
+                    } else if (equip.setId) {
+                        nameText.classList.add('set-item');
+                    }
                     nameSpan.appendChild(nameText);
                     
                     // 如果有镶嵌宝石，显示宝石信息
@@ -2438,12 +2439,18 @@ class BuildSimulator {
             const meta = document.createElement('div');
             const name = document.createElement('div');
             name.className = 'picker-item-name';
+            // 根据装备类型添加颜色样式
+            if (item.rarity === 'legendary') {
+                name.classList.add('legendary');
+            } else if (item.setId) {
+                name.classList.add('set-item');
+            }
             name.textContent = item.name;
             const stats = document.createElement('div');
             stats.className = 'picker-item-stats';
-            const keys = ['itemLevel','stamina','intellect','spirit','critRating','attack','defense','health','mana','critRate','critDamage','moveSpeed','cooldown','haste','mastery'];
+            const keys = ['itemLevel','stamina','intellect','spirit','critRating','defense','health','mana','critRate','moveSpeed','haste','mastery'];
             const parts = [];
-            keys.forEach(k => { if (item[k] !== undefined) parts.push(`${this.getStatLabel(k)}${k==='critDamage'||k==='cooldown' ? ':'+item[k]+'%' : ':'+item[k]}`); });
+            keys.forEach(k => { if (item[k] !== undefined) parts.push(`${this.getStatLabel(k)}:${item[k]}`); });
             stats.textContent = parts.join(' | ');
 
             meta.appendChild(name);
@@ -2728,12 +2735,10 @@ class BuildSimulator {
     
     getStatLabel(key) {
         const labels = {
-            attack: '攻击',
-            defense: '防御',
             health: '生命',
+            defense: '防御',
             mana: '魔法',
             critRate: '暴击',
-            critDamage: '暴击伤害',
             haste: '急速',
             mastery: '精通',
             spirit: '灵魂',
@@ -2741,7 +2746,6 @@ class BuildSimulator {
             intellect: '智力',
             moveSpeed: '移动速度',
             dodge: '闪避',
-            cooldown: '冷却',
             physicalDR: '物伤减免',
             magicDR: '魔伤减免'
         };
@@ -2789,6 +2793,12 @@ class BuildSimulator {
                 
                 const nameDiv = document.createElement('div');
                 nameDiv.className = 'equipment-item-name';
+                // 根据装备类型添加颜色样式
+                if (equipment.rarity === 'legendary') {
+                    nameDiv.classList.add('legendary');
+                } else if (equipment.setId) {
+                    nameDiv.classList.add('set-item');
+                }
                 nameDiv.textContent = `${slot.label}: ${equipment.name}`;
                 
                 const statsDiv = document.createElement('div');
@@ -2798,7 +2808,7 @@ class BuildSimulator {
                     if (key !== 'id' && key !== 'name' && key !== 'dropLocation' && equipment[key] !== undefined) {
                         const value = equipment[key];
                         let displayValue = value;
-                        if (key === 'critRate' || key === 'critDamage' || key === 'cooldown') {
+                        if (key === 'critRate') {
                             displayValue = value + '%';
                         }
                         if (typeof value === 'number') {
@@ -2831,14 +2841,11 @@ class BuildSimulator {
     
     getStatLabel(key) {
         const labels = {
-            attack: '攻击',
-            defense: '护甲',
             health: '生命',
+            defense: '护甲',
             mana: '魔法',
             critRate: '暴击',
-            critDamage: '暴击伤害',
             moveSpeed: '移动速度',
-            cooldown: '冷却',
             physicalDR: '物伤减免',
             magicDR: '魔伤减免',
             stamina: '耐力',
@@ -2849,9 +2856,6 @@ class BuildSimulator {
             dodge: '闪避',
             // 展示扩展
             itemLevel: '物品等级',
-            stamina: '耐力',
-            intellect: '智力',
-            spirit: '灵魂',
             critRating: '暴击评分',
             abilityCritBonus: '技能暴击率加成'
         };
@@ -2930,8 +2934,6 @@ class BuildSimulator {
                 }
             }
             if (build.stats) {
-                statTexts.push(`攻击: ${build.stats.attack}`);
-                statTexts.push(`防御: ${build.stats.defense}`);
                 statTexts.push(`生命: ${build.stats.health}`);
             }
             stats.textContent = statTexts.join(' | ');

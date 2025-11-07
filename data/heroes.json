@@ -5,14 +5,13 @@
         "description": "被遗弃的换生灵希尔薇由诡木林生物抚养长大，通晓草木鸟兽之语。\n为文明所不容的她加入秘境战盟，追寻从未体验的亲缘与家园。",
         "avatar": "assets/heros/silvia.png",
         "baseStats": {
-            "attack": 100,
-            "defense": 60,
-            "health": 500,
+            "stamina": 1000,
+            "intellect": 1000,
+            "defense": 0,
+            "health": 16433,
             "mana": 200,
             "critRate": 0,
-            "critDamage": 0,
-            "moveSpeed": 100,
-            "cooldown": 0
+            "moveSpeed": 100
         }
     }
 ]
